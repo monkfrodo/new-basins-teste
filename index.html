@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>The Lightbearer | Luminera | Blackout</title>
+<link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+<link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
+
+<style>
+  :root {
+    --bg: #0b1220;
+    --accent: #3b82f6;
+    --muted: #8fa1c2;
+    --safe: #22c55e;
+    --warn: #eab308;
+    --risk: #f59e0b;
+    --crit: #ef4444;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--bg) url('https://static.tibia.com/images/news/lightbearer_280.png') no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #e5ecff;
+    min-height: 100vh;
+    position: relative;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;
+    background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8));
+    pointer-events:none;z-index:0;
+  }
+  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 16px 40px}
+  h1{font-size:28px;margin:0 0 10px;font-weight:800;text-align:center}
+  .subtitle{text-align:center;color:var(--muted);font-size:15px;margin-bottom:30px}
+  .card{background:rgba(10,15,25,.85);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.3);margin-bottom:30px}
+  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
+  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#10182b;color:#e5ecff;font-size:15px}
+  .buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  button{padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s;min-width:140px;font-size:15px}
+  button:hover{opacity:.9;transform:translateY(-1px)}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-secondary{background:#334155;color:#e5ecff}
+  .btn-update-time{background:#2563eb;color:#fff}
+  @media (min-width:900px){.buttons{margin-top:30px;gap:20px}}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .basin{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;transition:.3s}
+  .basin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+  .title{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+  .badge{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600}
+  .badge.safe{background:rgba(34,197,94,.15);color:#22c55e}
+  .badge.warn{background:rgba(234,179,8,.15);color:#eab308}
+  .badge.risk{background:rgba(245,158,11,.15);color:#f59e0b}
+  .badge.crit{background:rgba(239,68,68,.15);color:#ef4444;animation:blink 1s linear infinite}
+  @keyframes blink{50%{opacity:.5}}
+  .muted{color:var(--muted);font-size:13px}
+  .due{margin-top:8px;font-size:14px}
+  .bar{margin-top:10px;height:8px;background:#0b1220;border-radius:999px;overflow:hidden}
+  .fill{height:100%;width:0%;transition:width 1s linear,background .5s ease}
+  .fill.safe{background:#22c55e}.fill.warn{background:#eab308}.fill.risk{background:#f59e0b}.fill.crit{background:#ef4444;box-shadow:0 0 10px 2px #ef4444}
+  .footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+  .icon{display:flex;justify-content:center;margin-top:25px}
+  .icon img{width:120px;opacity:.8}
+  @media (min-width:900px){.icon img{width:160px}}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1>The Lightbearer | Luminera | Blackout</h1>
+  <div class="subtitle">Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.</div>
+
+  <div class="card">
+    <form id="f">
+      <input type="hidden" name="fn" value="submit"/>
+      <div class="form">
+        <div><label>Player</label><input name="player" id="player" placeholder="Seu char" autocomplete="off"/></div>
+        <div><label>Basin</label><select name="basin" id="basin"></select></div>
+        <div><label>Data e hora (seu horário)</label><input id="dt" type="datetime-local"/></div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" id="nowBtn" class="btn-secondary">Agora</button>
+        <button type="submit" id="sendBtn" class="btn-primary">Acender / Registrar</button>
+        <button type="button" id="updateTimeBtn" class="btn-update-time">Registrar tempo restante</button>
+        <button type="button" id="refreshBtn" class="btn-secondary">Atualizar</button>
+      </div>
+
+      <input type="hidden" name="typed" id="typed"/>
+      <input type="hidden" name="tz" id="tz"/>
+      <input type="hidden" name="ms" id="ms"/>
+    </form>
+    <div id="status" class="muted" style="text-align:center;margin-top:10px;"></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer">
+    SLA 3h · Exibição base: <span id="tzLabel"></span><br><br>
+    <strong>Blackout Guild | Todos os direitos reservados.</strong>
+    <div class="icon">
+      <img src="https://static.tibia.com/images/news/lightbearer_280.png" alt="Lightbearer Icon">
+    </div>
+  </div>
+</div>
+
+<script>
+  const APPS = "https://script.google.com/macros/s/AKfycbz5bLDdo6VJZrEGs32jCqFT9dG8Cjx5IWPcYzILF1fi_dkw0UvzUlxv21UZWRytFBgS/exec";
+  const FULL = 3*3600;
+  const pad = n => String(n).padStart(2,'0');
+  const state = { items:[], slaHours:3, serverNowMs:null, clientNowAtFetch:null };
+
+  function fmtLocal(iso){
+    if(!iso) return "";
+    const d = new Date(iso);
+    return d.toLocaleString('pt-BR',{hour12:false});
+  }
+  function fmtCountdown(sec){
+    const s=Math.abs(sec), sign=sec<0?'-':'';
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
+    return `${sign}${pad(h)}:${pad(m)}:${pad(ss)}`;
+  }
+  function bucket(sec){
+    if(sec==null) return 'safe';
+    if(sec>=120*60) return 'safe';
+    if(sec>=60*60)  return 'warn';
+    if(sec>=30*60)  return 'risk';
+    return 'crit';
+  }
+
+  async function sendForm(fd){
+    try{
+      document.getElementById('status').textContent='Enviando...';
+      await fetch(APPS,{method:"POST",mode:"no-cors",body:fd});
+      document.getElementById('status').textContent='Registrado!';
+      loadState();
+    }catch(e){
+      document.getElementById('status').textContent='Erro ao enviar.';
+    }
+  }
+
+  function loadState(){
+    document.getElementById('status').textContent='Carregando...';
+    const cb='cb_'+Math.random().toString(36).slice(2);
+    window[cb]=data=>{
+      delete window[cb];
+      document.getElementById('status').textContent='';
+      state.items=data.items||[];
+      state.slaHours=data.slaHours;
+      state.serverNowMs=data.now||Date.now();
+      state.clientNowAtFetch=Date.now();
+      render(); startTick();
+    };
+    const s=document.createElement('script');
+    s.src=APPS+'?fn=state&callback='+cb;
+    document.body.appendChild(s);
+  }
+
+  function render(){
+    document.getElementById('tzLabel').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const sel=document.getElementById('basin'); sel.innerHTML='';
+    state.items.forEach(it=>{
+      const o=document.createElement('option'); o.value=it.basin; o.textContent=it.basin; sel.appendChild(o);
+    });
+
+    const grid=document.getElementById('grid'); grid.innerHTML='';
+    state.items.forEach(it=>{
+      const div=document.createElement('div'); div.className='basin';
+      const k=bucket(it.remainingSec);
+      const title=`<div class="title"><span>${it.basin}</span><span class="badge ${k}">${{safe:'SEGURO',warn:'ATENÇÃO',risk:'RISCO',crit:'CRÍTICO'}[k]}</span></div>`;
+      const last=it.lastIsoUtc?`<div class="muted">Último: <b>${fmtLocal(it.lastIsoUtc)}</b> · ${it.lastPlayer||''}</div>`:`<div class="muted">Sem registros ainda</div>`;
+      const next=it.nextDueIsoBase?`<div class="due">Próx.: <b>${fmtLocal(it.nextDueIsoBase)}</b> · <span id="cd-${it.basin.replace(/[^a-z0-9]/gi,'')}"></span></div>`:'';
+      const bar=`<div class="bar"><div class="fill ${k}" id="fill-${it.basin.replace(/[^a-z0-9]/gi,'')}"></div></div>`;
+      div.innerHTML=title+last+next+bar;
+      grid.appendChild(div);
+    });
+  }
+
+  function startTick(){
+    if(window._tick) clearInterval(window._tick);
+    const drift=(state.serverNowMs??Date.now())-(state.clientNowAtFetch??Date.now());
+    window._tick=setInterval(()=>{
+      state.items.forEach(it=>{
+        if(it.remainingSec==null) return;
+        const now=Date.now()+drift;
+        if(!it._nextDueMs) it._nextDueMs=state.serverNowMs+it.remainingSec*1000;
+        const rem=Math.floor((it._nextDueMs-now)/1000);
+        const el=document.getElementById('cd-'+it.basin.replace(/[^a-z0-9]/gi,''));
+        if(el) el.textContent=fmtCountdown(rem);
+        const fill=document.getElementById('fill-'+it.basin.replace(/[^a-z0-9]/gi,''));
+        if(fill){
+          const spent=Math.max(0,Math.min(FULL,FULL-Math.max(0,rem)));
+          fill.style.width=((spent/FULL)*100).toFixed(1)+'%';
+          const newK=bucket(rem);
+          ['safe','warn','risk','crit'].forEach(c=>fill.classList.remove(c));
+          fill.classList.add(newK);
+        }
+      });
+    },1000);
+  }
+
+  function setNow(){
+    const d=new Date();
+    const v=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    document.getElementById('dt').value=v;
+  }
+
+  // === Botão Registrar Tempo Restante ===
+  document.getElementById('updateTimeBtn').addEventListener('click', async () => {
+    const basin = document.getElementById('basin').value;
+    const player = document.getElementById('player').value.trim();
+    if (!basin || !player) {
+      alert('Preencha o nome e selecione um Basin antes de continuar.');
+      return;
+    }
+    const tempo = prompt('Digite o tempo restante no formato HH:MM (ex: 2:30):');
+    if (!tempo || !/^\d{1,2}:\d{2}$/.test(tempo)) {
+      alert('Formato inválido. Use HH:MM (ex: 2:30).');
+      return;
+    }
+    const [h, m] = tempo.split(':').map(Number);
+    const agora = new Date();
+    const timestamp = agora.getTime() - ((h * 60 + m) * 60 * 1000);
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const params = new URLSearchParams({
+      fn: 'submit',
+      basin,
+      player,
+      ms: timestamp,
+      tz,
+      typed: `UPDATE - ${tempo} restante`
+    });
+    try {
+      await fetch(APPS, { method: 'POST', body: params });
+      alert('Tempo atualizado com sucesso!');
+      loadState();
+    } catch (err) {
+      alert('Erro ao registrar tempo. Tente novamente.');
+    }
+  });
+
+  document.getElementById('f').addEventListener('submit',e=>{
+    e.preventDefault();
+    const fd=new FormData(e.target);
+    const dt=document.getElementById('dt').value;
+    const ms=dt?new Date(dt).getTime():Date.now();
+    fd.set('typed',dt||''); fd.set('ms',String(ms));
+    fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
+    sendForm(fd);
+  });
+
+  document.getElementById('nowBtn').addEventListener('click',setNow);
+  document.getElementById('refreshBtn').addEventListener('click',loadState);
+  setNow(); loadState();
+</script>
+
+<!-- ====== ADDON: Idioma + Server Save ====== -->
+<style>
+  .top-controls {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lang-select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 13px;
+    padding: 5px 26px 5px 30px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    font-weight: 500;
+    background-image: url("https://flagcdn.com/w20/br.png");
+    background-repeat: no-repeat;
+    background-size: 18px auto;
+    background-position: 8px center;
+    transition: background-image 0.2s ease;
+  }
+  .lang-select option { color: #000; }
+  .ss-badge {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .ss-badge img { width: 14px; height: 14px; vertical-align: middle; }
+  @media (max-width: 600px) {
+    .top-controls { top: 10px; left: 50%; transform: translateX(-50%); justify-content: center; gap: 8px; }
+  }
+</style>
+
+<div class="top-controls">
+  <select id="langSelector" class="lang-select">
+    <option value="pt" selected>Português</option>
+    <option value="en">English</option>
+    <option value="es">Español</option>
+  </select>
+  <div id="ssBadge" class="ss-badge">
+    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
+    <span id="ssText">SS+0 (calculando...)</span>
+  </div>
+</div>
+
+<script>
+  const langSelector = document.getElementById("langSelector");
+  const flagMap = { pt: "br", en: "us", es: "mx" };
+  const translations = {
+    pt: { title: "The Lightbearer | Luminera | Blackout", subtitle: "Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.", register: "Acender / Registrar", update: "Atualizar", player: "Player", date: "Data e hora (seu horário)" },
+    en: { title: "The Lightbearer | Luminera | Blackout", subtitle: "Register a lighting (reignite every 3h). Your timezone is detected automatically.", register: "Light / Register", update: "Refresh", player: "Player", date: "Date and Time (your timezone)" },
+    es: { title: "El Portador de Luz | Luminera | Blackout", subtitle: "Registra un encendido (reencender cada 3h). Tu zona horaria se detecta automáticamente.", register: "Encender / Registrar", update: "Actualizar", player: "Jugador", date: "Fecha y hora (tu zona horaria)" }
+  };
+
+  function updateFlagAndText() {
+    const lang = langSelector.value;
+    const code = flagMap[lang] || "br";
+    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
+    localStorage.setItem("lang", lang);
+
+    const t = translations[lang];
+    if (t) {
+      document.querySelector("h1").textContent = t.title;
+      document.querySelector(".subtitle").textContent = t.subtitle;
+
+      // Atualiza labels
+      const labels = document.querySelectorAll("label");
+      labels.forEach(label => {
+        if (label.textContent.includes("Player")) label.textContent = t.player;
+        if (label.textContent.includes("Data")) label.textContent = t.date;
+      });
+
+      // Atualiza botões
+      const btnSend = document.getElementById("sendBtn");
+      const btnUpdateTime = document.getElementById("updateTimeBtn");
+      const btnRefresh = document.getElementById("refreshBtn");
+      const btnNow = document.getElementById("nowBtn");
+
+      if (btnSend) btnSend.textContent = t.register;
+      if (btnUpdateTime) btnUpdateTime.textContent =
+        lang === "pt" ? "Registrar tempo restante" :
+        lang === "en" ? "Register remaining time" :
+        "Registrar tiempo restante";
+      if (btnRefresh) btnRefresh.textContent = t.update;
+      if (btnNow) btnNow.textContent =
+        lang === "pt" ? "Agora" :
+        lang === "en" ? "Now" :
+        "Ahora";
+    }
+  }
+
+  const savedLang = localStorage.getItem("lang") || "pt";
+  langSelector.value = savedLang;
+  updateFlagAndText();
+  langSelector.addEventListener("change", updateFlagAndText);
+
+  function updateServerSave() {
+    const tzSP = "America/Sao_Paulo";
+    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
+    const ss = new Date(nowSP);
+    ss.setHours(6, 0, 0, 0);
+    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
+
+    const diffHours = (nowSP - ss) / 3600000;
+    const hours = Math.floor(diffHours);
+    const minutes = Math.floor((diffHours - hours) * 60);
+    const remaining = 60 - minutes;
+    document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
+  }
+
+  updateServerSave();
+  setInterval(updateServerSave, 60000);
+</script>
+
+</body>
+</html>
