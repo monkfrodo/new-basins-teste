@@ -53,13 +53,16 @@
         <div><label>Player</label><input name="player" id="player" placeholder="Seu char" autocomplete="off"/></div>
         <div><label>Basin</label><select name="basin" id="basin"></select></div>
         <div><label>Data e hora (seu horário)</label><input id="dt" type="datetime-local"/></div>
+        <div><label for="rest">Tempo restante (HH:MM)</label><input id="rest" placeholder="ex: 2:30" inputmode="numeric" pattern="\d{1,2}:\d{2}"></div>
       </div>
+
       <div class="buttons">
         <button type="button" id="nowBtn" class="btn-secondary">Agora</button>
         <button type="submit" id="sendBtn" class="btn-primary">Acender / Registrar</button>
         <button type="button" id="updateTimeBtn" class="btn-update-time">Registrar tempo restante</button>
         <button type="button" id="refreshBtn" class="btn-secondary">Atualizar</button>
       </div>
+
       <input type="hidden" name="typed" id="typed"/>
       <input type="hidden" name="tz" id="tz"/>
       <input type="hidden" name="ms" id="ms"/>
@@ -154,24 +157,38 @@ function startTick(){
 
 function setNow(){const d=new Date();const v=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;document.getElementById('dt').value=v;}
 
-document.getElementById('updateTimeBtn').addEventListener('click',async()=>{
-  const basin=document.getElementById('basin').value;
-  const player=document.getElementById('player').value.trim();
-  if(!basin||!player){alert('Preencha o nome e selecione um Basin antes de continuar.');return;}
-  const tempo=prompt('Digite o tempo restante no formato HH:MM (ex: 2:30):');
-  if(!tempo||!/^\d{1,2}:\d{2}$/.test(tempo)){alert('Formato inválido. Use HH:MM (ex: 2:30).');return;}
-  const [h,m]=tempo.split(':').map(Number);
-  const agora=new Date();
-  const timestamp=agora.getTime()-((h*60+m)*60*1000);
-  const fd=new FormData();
-  fd.set('fn','submit');fd.set('basin',basin);fd.set('player',player);
-  fd.set('ms',String(timestamp));
-  fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
-  fd.set('typed',`CHECK - ${tempo} restante`);
-  document.getElementById('status').textContent='Registrando tempo...';
+// novo botão
+document.getElementById('updateTimeBtn').onclick = async () => {
+  const basin  = document.getElementById('basin').value;
+  const player = (document.getElementById('player').value || '').trim();
+  const restEl = document.getElementById('rest');
+  const tempo  = (restEl && restEl.value || '').trim();
+
+  if (!basin || !player) {
+    alert('Preencha o Player e selecione um Basin antes de continuar.');
+    return;
+  }
+  if (!tempo || !/^\d{1,2}:\d{2}$/.test(tempo)) {
+    alert('Informe o tempo restante no formato HH:MM (ex: 2:30).');
+    if (restEl) restEl.focus();
+    return;
+  }
+
+  const [h, m] = tempo.split(':').map(Number);
+  const timestamp = Date.now() - ((h * 60 + m) * 60 * 1000);
+
+  const fd = new FormData();
+  fd.set('fn','submit');
+  fd.set('basin', basin);
+  fd.set('player', player);
+  fd.set('ms', String(timestamp));
+  fd.set('tz', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+  fd.set('typed', `CHECK - ${tempo}`);
+
+  document.getElementById('status').textContent='Registrando tempo restante...';
   await fetch(APPS,{method:'POST',mode:'no-cors',body:fd});
-  setTimeout(()=>{document.getElementById('status').textContent='Tempo atualizado!';loadState();},800);
-});
+  setTimeout(()=>{document.getElementById('status').textContent='Tempo restante registrado!';loadState();},800);
+};
 
 document.getElementById('f').addEventListener('submit',e=>{
   e.preventDefault();
