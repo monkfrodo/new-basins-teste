@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>The Lightbearer | Luminera | Blackout</title>
 <link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-<link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-<link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
 <style>
   :root {
     --bg: #0b1220;
@@ -18,7 +16,6 @@
     --crit: #ef4444;
     --radius: 16px;
   }
-  * { box-sizing: border-box; }
   body {
     margin: 0;
     font-family: "Inter", system-ui, sans-serif;
@@ -27,7 +24,6 @@
     background-attachment: fixed;
     color: #e5ecff;
     min-height: 100vh;
-    position: relative;
   }
   body::before{
     content:"";position:fixed;inset:0;
@@ -35,18 +31,17 @@
     pointer-events:none;z-index:0;
   }
   .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 16px 40px}
-  h1{font-size:28px;margin:0 0 10px;font-weight:800;text-align:center}
-  .subtitle{text-align:center;color:var(--muted);font-size:15px;margin-bottom:30px}
+  h1{text-align:center;font-weight:800;margin-bottom:10px}
+  .subtitle{text-align:center;color:var(--muted);margin-bottom:30px}
   .card{background:rgba(10,15,25,.85);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.3);margin-bottom:30px}
   .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
-  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
   input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#10182b;color:#e5ecff;font-size:15px}
   .buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
   button{padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s;min-width:140px;font-size:15px}
   button:hover{opacity:.9;transform:translateY(-1px)}
   .btn-primary{background:var(--accent);color:#fff}
   .btn-secondary{background:#334155;color:#e5ecff}
-  @media (min-width:900px){.buttons{margin-top:30px;gap:20px}}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
   .basin{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;transition:.3s}
   .basin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
@@ -58,14 +53,8 @@
   .badge.crit{background:rgba(239,68,68,.15);color:#ef4444;animation:blink 1s linear infinite}
   @keyframes blink{50%{opacity:.5}}
   .muted{color:var(--muted);font-size:13px}
-  .due{margin-top:8px;font-size:14px}
-  .bar{margin-top:10px;height:8px;background:#0b1220;border-radius:999px;overflow:hidden}
-  .fill{height:100%;width:0%;transition:width 1s linear,background .5s ease}
-  .fill.safe{background:#22c55e}.fill.warn{background:#eab308}.fill.risk{background:#f59e0b}.fill.crit{background:#ef4444;box-shadow:0 0 10px 2px #ef4444}
-  .footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
-  .icon{display:flex;justify-content:center;margin-top:25px}
-  .icon img{width:120px;opacity:.8}
-  @media (min-width:900px){.icon img{width:160px}}
+  .footer{text-align:center;color:var(--muted);margin-top:40px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px;font-size:13px}
+  .icon img{width:140px;opacity:.8;margin-top:20px}
 </style>
 </head>
 <body>
@@ -80,11 +69,11 @@
         <div><label>Player</label><input name="player" id="player" placeholder="Seu char" autocomplete="off"/></div>
         <div><label>Basin</label><select name="basin" id="basin"></select></div>
         <div><label>Data e hora (seu horário)</label><input id="dt" type="datetime-local"/></div>
+        <div><label>Tempo restante (opcional)</label><input id="tempoRestante" type="text" placeholder="Ex: 2:30"/></div>
       </div>
 
       <div class="buttons">
         <button type="button" id="nowBtn" class="btn-secondary">Agora</button>
-        <button type="button" id="tempoRestanteBtn" class="btn-secondary">Tempo Restante</button>
         <button type="submit" id="sendBtn" class="btn-primary">Acender / Registrar</button>
       </div>
 
@@ -108,9 +97,9 @@
 
 <script>
   const APPS = "https://script.google.com/macros/s/AKfycbz5bLDdo6VJZrEGs32jCqFT9dG8Cjx5IWPcYzILF1fi_dkw0UvzUlxv21UZWRytFBgS/exec";
-  const FULL = 3*3600;
-  const pad = n => String(n).padStart(2,'0');
-  const state = { items:[], slaHours:3, serverNowMs:null, clientNowAtFetch:null };
+  const FULL = 3 * 3600;
+  const pad = n => String(n).padStart(2, '0');
+  const state = { items: [], slaHours: 3, serverNowMs: null, clientNowAtFetch: null };
 
   function fmtLocal(iso){
     if(!iso) return "";
@@ -170,9 +159,8 @@
       const k=bucket(it.remainingSec);
       const title=`<div class="title"><span>${it.basin}</span><span class="badge ${k}">${{safe:'SEGURO',warn:'ATENÇÃO',risk:'RISCO',crit:'CRÍTICO'}[k]}</span></div>`;
       const last=it.lastIsoUtc?`<div class="muted">Último: <b>${fmtLocal(it.lastIsoUtc)}</b> · ${it.lastPlayer||''}</div>`:`<div class="muted">Sem registros ainda</div>`;
-      const next=it.nextDueIsoBase?`<div class="due">Próx.: <b>${fmtLocal(it.nextDueIsoBase)}</b> · <span id="cd-${it.basin.replace(/[^a-z0-9]/gi,'')}"></span></div>`:'';
-      const bar=`<div class="bar"><div class="fill ${k}" id="fill-${it.basin.replace(/[^a-z0-9]/gi,'')}"></div></div>`;
-      div.innerHTML=title+last+next+bar;
+      const next=it.nextDueIsoBase?`<div class="muted">Próx.: <b>${fmtLocal(it.nextDueIsoBase)}</b></div>`:'';
+      div.innerHTML=title+last+next;
       grid.appendChild(div);
     });
   }
@@ -186,15 +174,10 @@
         const now=Date.now()+drift;
         if(!it._nextDueMs) it._nextDueMs=state.serverNowMs+it.remainingSec*1000;
         const rem=Math.floor((it._nextDueMs-now)/1000);
-        const el=document.getElementById('cd-'+it.basin.replace(/[^a-z0-9]/gi,''));
-        if(el) el.textContent=fmtCountdown(rem);
         const fill=document.getElementById('fill-'+it.basin.replace(/[^a-z0-9]/gi,''));
         if(fill){
           const spent=Math.max(0,Math.min(FULL,FULL-Math.max(0,rem)));
           fill.style.width=((spent/FULL)*100).toFixed(1)+'%';
-          const newK=bucket(rem);
-          ['safe','warn','risk','crit'].forEach(c=>fill.classList.remove(c));
-          fill.classList.add(newK);
         }
       });
     },1000);
@@ -206,37 +189,31 @@
     document.getElementById('dt').value=v;
   }
 
-  // === BOTÃO DE TEMPO RESTANTE ===
-  document.getElementById('tempoRestanteBtn').addEventListener('click', () => {
-    const input = prompt("Quanto tempo RESTA para o Basin? (ex: 2:30 para 2h30)");
-    if (!input) return;
-
-    const [h, m] = input.split(':').map(Number);
-    if (isNaN(h)) return alert("Formato inválido. Use HH:MM, ex: 2:30");
-
-    const tempoRestanteMin = (h * 60) + (m || 0);
-    const diferencaMin = (3 * 60) - tempoRestanteMin;
-
-    const d = new Date();
-    d.setMinutes(d.getMinutes() - diferencaMin);
-
-    const pad = n => String(n).padStart(2, '0');
-    const v = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    document.getElementById('dt').value = v;
-    alert(`Horário ajustado para ${v.replace('T',' às ')} (retroativo).`);
-  });
-
   document.getElementById('f').addEventListener('submit',e=>{
     e.preventDefault();
     const fd=new FormData(e.target);
-    const dt=document.getElementById('dt').value;
-    const ms=dt?new Date(dt).getTime():Date.now();
-    fd.set('typed',dt||''); fd.set('ms',String(ms));
-    fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
+    let dt=document.getElementById('dt').value;
+    const tempoRestante = document.getElementById('tempoRestante').value;
+
+    if (tempoRestante) {
+      const [h, m] = tempoRestante.split(':').map(Number);
+      if (!isNaN(h)) {
+        const tempoRestanteMin = (h * 60) + (m || 0);
+        const diferencaMin = (3 * 60) - tempoRestanteMin;
+        const d = new Date();
+        d.setMinutes(d.getMinutes() - diferencaMin);
+        dt = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      }
+    }
+
+    const ms = dt ? new Date(dt).getTime() : Date.now();
+    fd.set('typed', dt || '');
+    fd.set('ms', String(ms));
+    fd.set('tz', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
     sendForm(fd);
   });
 
-  document.getElementById('nowBtn').addEventListener('click',setNow);
+  document.getElementById('nowBtn').addEventListener('click', setNow);
   setNow(); loadState();
 </script>
 </body>
