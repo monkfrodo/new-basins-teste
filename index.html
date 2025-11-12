@@ -7,7 +7,6 @@
 <link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
 <link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
 <link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
-
 <style>
   :root {
     --bg: #0b1220;
@@ -30,34 +29,34 @@
     min-height: 100vh;
     position: relative;
   }
-  body::before{
-    content:"";position:fixed;inset:0;
+  body::before {
+    content:""; position:fixed; inset:0;
     background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8));
-    pointer-events:none;z-index:0;
+    pointer-events:none; z-index:0;
   }
-  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 16px 40px}
-  h1{font-size:28px;margin:0 0 10px;font-weight:800;text-align:center}
-  .subtitle{text-align:center;color:var(--muted);font-size:15px;margin-bottom:30px}
-  .card{background:rgba(10,15,25,.85);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.3);margin-bottom:30px}
-  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
-  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-  input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#10182b;color:#e5ecff;font-size:15px}
-  .buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-  button{padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s;min-width:140px;font-size:15px}
-  button:hover{opacity:.9;transform:translateY(-1px)}
-  .btn-primary{background:var(--accent);color:#fff}
-  .btn-secondary{background:#334155;color:#e5ecff}
-  .btn-update-time{background:#2563eb;color:#fff}
-  @media (min-width:900px){.buttons{margin-top:30px;gap:20px}}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-  .basin{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;transition:.3s}
-  .basin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
-  .title{display:flex;justify-content:space-between;align-items:center;font-weight:700}
-  .badge{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600}
-  .badge.safe{background:rgba(34,197,94,.15);color:#22c55e}
-  .badge.warn{background:rgba(234,179,8,.15);color:#eab308}
-  .badge.risk{background:rgba(245,158,11,.15);color:#f59e0b}
-  .badge.crit{background:rgba(239,68,68,.15);color:#ef4444;animation:blink 1s linear infinite}
+  .wrap { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:60px 16px 40px; }
+  h1 { font-size:28px; margin:0 0 10px; font-weight:800; text-align:center; }
+  .subtitle { text-align:center; color:var(--muted); font-size:15px; margin-bottom:30px; }
+  .card { background:rgba(10,15,25,.85); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:24px; box-shadow:0 4px 25px rgba(0,0,0,.3); margin-bottom:30px; }
+  .form { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; align-items:end; }
+  label { font-size:13px; color:var(--muted); display:block; margin-bottom:6px; }
+  input,select { width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,.08); background:#10182b; color:#e5ecff; font-size:15px; }
+  .buttons { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:22px; }
+  button { padding:14px 26px; border-radius:12px; border:none; font-weight:600; cursor:pointer; transition:.2s; min-width:140px; font-size:15px; }
+  button:hover { opacity:.9; transform:translateY(-1px); }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-secondary { background:#334155; color:#e5ecff; }
+  .btn-update-time { background:#2563eb; color:#fff; }
+  @media (min-width:900px){ .buttons{margin-top:30px;gap:20px;} }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+  .basin { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:16px; transition:.3s; }
+  .basin:hover { background:rgba(255,255,255,.1); transform:translateY(-2px); }
+  .title { display:flex; justify-content:space-between; align-items:center; font-weight:700; }
+  .badge { font-size:11px; padding:4px 10px; border-radius:999px; font-weight:600; }
+  .badge.safe { background:rgba(34,197,94,.15); color:#22c55e; }
+  .badge.warn { background:rgba(234,179,8,.15); color:#eab308; }
+  .badge.risk { background:rgba(245,158,11,.15); color:#f59e0b; }
+  .badge.crit { background:rgba(239,68,68,.15); color:#ef4444; animation:blink 1s linear infinite; }
   @keyframes blink{50%{opacity:.5}}
   .muted{color:var(--muted);font-size:13px}
   .due{margin-top:8px;font-size:14px}
@@ -139,7 +138,7 @@
       document.getElementById('status').textContent='Enviando...';
       await fetch(APPS,{method:"POST",mode:"no-cors",body:fd});
       document.getElementById('status').textContent='Registrado!';
-      loadState();
+      setTimeout(loadState,1500); // delay garante sync
     }catch(e){
       document.getElementById('status').textContent='Erro ao enviar.';
     }
@@ -164,12 +163,10 @@
 
   function render(){
     document.getElementById('tzLabel').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
-
     const sel=document.getElementById('basin'); sel.innerHTML='';
     state.items.forEach(it=>{
       const o=document.createElement('option'); o.value=it.basin; o.textContent=it.basin; sel.appendChild(o);
     });
-
     const grid=document.getElementById('grid'); grid.innerHTML='';
     state.items.forEach(it=>{
       const div=document.createElement('div'); div.className='basin';
@@ -212,7 +209,7 @@
     document.getElementById('dt').value=v;
   }
 
-  // === Botão Registrar Tempo Restante (usa o MESMO fluxo do sendForm para evitar CORS) ===
+  // botão de atualização de tempo restante (sem alterar lógica)
   document.getElementById('updateTimeBtn').addEventListener('click', async () => {
     const basin = document.getElementById('basin').value;
     const player = document.getElementById('player').value.trim();
@@ -228,25 +225,27 @@
     const [h, m] = tempo.split(':').map(Number);
     const agora = new Date();
     const timestamp = agora.getTime() - ((h * 60 + m) * 60 * 1000);
-
     const fd = new FormData();
     fd.set('fn','submit');
     fd.set('basin', basin);
     fd.set('player', player);
     fd.set('ms', String(timestamp));
     fd.set('tz', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
-    fd.set('typed', `UPDATE - ${tempo} restante`);
-
-    await sendForm(fd); // reaproveita o fluxo sem-CORS e com reload
+    fd.set('typed', `CHECK - ${tempo} restante`);
+    document.getElementById('status').textContent = 'Registrando tempo...';
+    await fetch(APPS, { method: 'POST', mode: 'no-cors', body: fd });
+    setTimeout(() => {
+      document.getElementById('status').textContent = 'Tempo atualizado!';
+      loadState();
+    }, 1500);
   });
 
-  document.getElementById('f').addEventListener('submit',e=>{
+  document.getElementById('f').addEventListener('submit', e=>{
     e.preventDefault();
     const fd=new FormData(e.target);
     const dt=document.getElementById('dt').value;
     const ms=dt?new Date(dt).getTime():Date.now();
-    fd.set('typed',dt||'');
-    fd.set('ms',String(ms));
+    fd.set('typed',dt||''); fd.set('ms',String(ms));
     fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
     sendForm(fd);
   });
@@ -254,136 +253,6 @@
   document.getElementById('nowBtn').addEventListener('click',setNow);
   document.getElementById('refreshBtn').addEventListener('click',loadState);
   setNow(); loadState();
-</script>
-
-<!-- ====== ADDON: Idioma + Server Save ====== -->
-<style>
-  .top-controls {
-    position: fixed;
-    top: 14px;
-    right: 18px;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .lang-select {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 6px;
-    color: #fff;
-    font-size: 13px;
-    padding: 5px 26px 5px 30px;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    font-weight: 500;
-    background-image: url("https://flagcdn.com/w20/br.png");
-    background-repeat: no-repeat;
-    background-size: 18px auto;
-    background-position: 8px center;
-    transition: background-image 0.2s ease;
-  }
-  .lang-select option { color: #000; }
-  .ss-badge {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #f87171;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    line-height: 1;
-  }
-  .ss-badge img { width: 14px; height: 14px; vertical-align: middle; }
-  @media (max-width: 600px) {
-    .top-controls { top: 10px; left: 50%; transform: translateX(-50%); justify-content: center; gap: 8px; }
-  }
-</style>
-
-<div class="top-controls">
-  <select id="langSelector" class="lang-select">
-    <option value="pt" selected>Português</option>
-    <option value="en">English</option>
-    <option value="es">Español</option>
-  </select>
-  <div id="ssBadge" class="ss-badge">
-    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
-    <span id="ssText">SS+0 (calculando...)</span>
-  </div>
-</div>
-
-<script>
-  const langSelector = document.getElementById("langSelector");
-  const flagMap = { pt: "br", en: "us", es: "mx" };
-  const translations = {
-    pt: { title: "The Lightbearer | Luminera | Blackout", subtitle: "Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.", register: "Acender / Registrar", update: "Atualizar", player: "Player", date: "Data e hora (seu horário)" },
-    en: { title: "The Lightbearer | Luminera | Blackout", subtitle: "Register a lighting (reignite every 3h). Your timezone is detected automatically.", register: "Light / Register", update: "Refresh", player: "Player", date: "Date and Time (your timezone)" },
-    es: { title: "El Portador de Luz | Luminera | Blackout", subtitle: "Registra un encendido (reencender cada 3h). Tu zona horaria se detecta automáticamente.", register: "Encender / Registrar", update: "Actualizar", player: "Jugador", date: "Fecha y hora (tu zona horaria)" }
-  };
-
-  function updateFlagAndText() {
-    const lang = langSelector.value;
-    const code = flagMap[lang] || "br";
-    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
-    localStorage.setItem("lang", lang);
-
-    const t = translations[lang];
-    if (t) {
-      document.querySelector("h1").textContent = t.title;
-      document.querySelector(".subtitle").textContent = t.subtitle;
-
-      // labels
-      const labels = document.querySelectorAll("label");
-      labels.forEach(label => {
-        if (label.textContent.includes("Player") || label.textContent.includes("Jugador")) label.textContent = t.player;
-        if (label.textContent.includes("Data") || label.textContent.includes("Date")) label.textContent = t.date;
-      });
-
-      // botões
-      const btnSend = document.getElementById("sendBtn");
-      const btnUpdateTime = document.getElementById("updateTimeBtn");
-      const btnRefresh = document.getElementById("refreshBtn");
-      const btnNow = document.getElementById("nowBtn");
-
-      if (btnSend) btnSend.textContent = t.register;
-      if (btnUpdateTime) btnUpdateTime.textContent =
-        lang === "pt" ? "Registrar tempo restante" :
-        lang === "en" ? "Register remaining time" :
-        "Registrar tiempo restante";
-      if (btnRefresh) btnRefresh.textContent = t.update;
-      if (btnNow) btnNow.textContent =
-        lang === "pt" ? "Agora" :
-        lang === "en" ? "Now" :
-        "Ahora";
-    }
-  }
-
-  const savedLang = localStorage.getItem("lang") || "pt";
-  langSelector.value = savedLang;
-  updateFlagAndText();
-  langSelector.addEventListener("change", updateFlagAndText);
-
-  function updateServerSave() {
-    const tzSP = "America/Sao_Paulo";
-    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
-    const ss = new Date(nowSP);
-    ss.setHours(6, 0, 0, 0);
-    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
-
-    const diffHours = (nowSP - ss) / 3600000;
-    const hours = Math.floor(diffHours);
-    const minutes = Math.floor((diffHours - hours) * 60);
-    const remaining = 60 - minutes;
-    document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
-  }
-
-  updateServerSave();
-  setInterval(updateServerSave, 60000);
 </script>
 
 </body>
