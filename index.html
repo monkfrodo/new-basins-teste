@@ -174,35 +174,56 @@ document.getElementById('updateTimeBtn').onclick = async () => {
     return;
   }
 
+  // Converte HH:MM para timestamp-base (quando foi aceso pela última vez)
   const [h, m] = tempo.split(':').map(Number);
-  const timestamp = Date.now() - ((h * 60 + m) * 60 * 1000);
+  const baseMs = Date.now() - ((h * 60 + m) * 60 * 1000);
 
+  // ===== Atualização OTIMISTA no front (sem esperar o servidor) =====
+  // Se já há itens carregados (state.items), aplica no item daquele basin e re-renderiza
+  if (Array.isArray(state.items) && state.items.length) {
+    // acha o item do basin
+    const idx = state.items.findIndex(it => it.basin === basin);
+    if (idx !== -1) {
+      const it = state.items[idx];
+      // atualiza "último acendimento" e "quem acendeu/checou"
+      it.lastPlayer   = player;
+      it.lastIsoUtc   = new Date(baseMs).toISOString();
+      it.lastIsoBase  = new Date(baseMs).toLocaleString('pt-BR', { hour12: false });
+      // calcula próximo vencimento e remainingSec
+      const nextMs    = baseMs + FULL * 1000; // FULL = 3h em segundos (já existe no seu código)
+      it.nextDueIsoBase = new Date(nextMs).toLocaleString('pt-BR', { hour12: false });
+      // alinha o relógio local do front para o tick
+      state.serverNowMs       = Date.now();
+      state.clientNowAtFetch  = Date.now();
+      it._nextDueMs           = nextMs;
+      it.remainingSec         = Math.floor((nextMs - Date.now()) / 1000);
+      // re-render e retoma o tick imediatamente
+      render();
+      startTick();
+    }
+  }
+
+  // ===== Envia pro Apps Script (grava na planilha com CHECK) =====
   const fd = new FormData();
   fd.set('fn','submit');
   fd.set('basin', basin);
   fd.set('player', player);
-  fd.set('ms', String(timestamp));
+  fd.set('ms', String(baseMs));
   fd.set('tz', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
-  fd.set('typed', `CHECK - ${tempo}`);
+  fd.set('typed', `CHECK - ${tempo}`); // o backend aceita "CHECK - HH:MM"
 
-  document.getElementById('status').textContent='Registrando tempo restante...';
-  await fetch(APPS,{method:'POST',mode:'no-cors',body:fd});
-  setTimeout(()=>{document.getElementById('status').textContent='Tempo restante registrado!';loadState();},800);
+  const status = document.getElementById('status');
+  if (status) status.textContent = 'Registrando tempo restante...';
+
+  try {
+    await fetch(APPS, { method: 'POST', mode: 'no-cors', body: fd });
+    if (status) status.textContent = 'Tempo restante registrado!';
+    // força recarregar estado sem cache para conciliar com o servidor
+    setTimeout(() => { loadState(); }, 800);
+  } catch (e) {
+    if (status) status.textContent = 'Falha ao registrar tempo restante.';
+  }
 };
-
-document.getElementById('f').addEventListener('submit',e=>{
-  e.preventDefault();
-  const fd=new FormData(e.target);
-  const dt=document.getElementById('dt').value;
-  const ms=dt?new Date(dt).getTime():Date.now();
-  fd.set('typed',dt||'');fd.set('ms',String(ms));
-  fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
-  sendForm(fd);
-});
-
-document.getElementById('nowBtn').addEventListener('click',setNow);
-document.getElementById('refreshBtn').addEventListener('click',loadState);
-setNow();loadState();
 </script>
 </body>
 </html>
