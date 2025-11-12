@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>The Lightbearer | Luminera | Blackout</title>.
-  <link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-  <link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-  <link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
+<title>The Lightbearer | Luminera | Blackout</title>
+<link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+<link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
 <style>
   :root {
     --bg: #0b1220;
@@ -84,8 +84,8 @@
 
       <div class="buttons">
         <button type="button" id="nowBtn" class="btn-secondary">Agora</button>
+        <button type="button" id="tempoRestanteBtn" class="btn-secondary">Tempo Restante</button>
         <button type="submit" id="sendBtn" class="btn-primary">Acender / Registrar</button>
-        <button type="button" id="refreshBtn" class="btn-secondary">Atualizar</button>
       </div>
 
       <input type="hidden" name="typed" id="typed"/>
@@ -160,12 +160,10 @@
 
   function render(){
     document.getElementById('tzLabel').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
-
     const sel=document.getElementById('basin'); sel.innerHTML='';
     state.items.forEach(it=>{
       const o=document.createElement('option'); o.value=it.basin; o.textContent=it.basin; sel.appendChild(o);
     });
-
     const grid=document.getElementById('grid'); grid.innerHTML='';
     state.items.forEach(it=>{
       const div=document.createElement('div'); div.className='basin';
@@ -208,6 +206,26 @@
     document.getElementById('dt').value=v;
   }
 
+  // === BOTÃO DE TEMPO RESTANTE ===
+  document.getElementById('tempoRestanteBtn').addEventListener('click', () => {
+    const input = prompt("Quanto tempo RESTA para o Basin? (ex: 2:30 para 2h30)");
+    if (!input) return;
+
+    const [h, m] = input.split(':').map(Number);
+    if (isNaN(h)) return alert("Formato inválido. Use HH:MM, ex: 2:30");
+
+    const tempoRestanteMin = (h * 60) + (m || 0);
+    const diferencaMin = (3 * 60) - tempoRestanteMin;
+
+    const d = new Date();
+    d.setMinutes(d.getMinutes() - diferencaMin);
+
+    const pad = n => String(n).padStart(2, '0');
+    const v = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    document.getElementById('dt').value = v;
+    alert(`Horário ajustado para ${v.replace('T',' às ')} (retroativo).`);
+  });
+
   document.getElementById('f').addEventListener('submit',e=>{
     e.preventDefault();
     const fd=new FormData(e.target);
@@ -219,164 +237,7 @@
   });
 
   document.getElementById('nowBtn').addEventListener('click',setNow);
-  document.getElementById('refreshBtn').addEventListener('click',loadState);
   setNow(); loadState();
 </script>
-
-<!-- ====== ADDON: Idioma + Server Save (versão corrigida e refinada) ====== -->
-<style>
-  .top-controls {
-    position: fixed;
-    top: 14px;
-    right: 18px;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .lang-select {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 6px;
-    color: #fff;
-    font-size: 13px;
-    padding: 5px 26px 5px 30px;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    font-weight: 500;
-    background-image: url("https://flagcdn.com/w20/br.png");
-    background-repeat: no-repeat;
-    background-size: 18px auto;
-    background-position: 8px center;
-    transition: background-image 0.2s ease;
-  }
-
-  .lang-select option { color: #000; }
-
-  .ss-badge {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #f87171;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    line-height: 1;
-  }
-
-  .ss-badge img {
-    width: 14px;
-    height: 14px;
-    vertical-align: middle;
-  }
-
-  @media (max-width: 600px) {
-    .top-controls {
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      justify-content: center;
-      gap: 8px;
-    }
-  }
-</style>
-
-<div class="top-controls">
-  <select id="langSelector" class="lang-select">
-    <option value="pt" selected>Português</option>
-    <option value="en">English</option>
-    <option value="es">Español</option>
-  </select>
-
-  <div id="ssBadge" class="ss-badge">
-    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
-    <span id="ssText">SS+0 (calculando...)</span>
-  </div>
-</div>
-
-<script>
-  // ====== Bandeira e idioma ======
-  const langSelector = document.getElementById("langSelector");
-  const flagMap = { pt: "br", en: "us", es: "mx" };
-  const translations = {
-    pt: {
-      title: "The Lightbearer | Luminera | Blackout",
-      subtitle: "Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.",
-      register: "Acender / Registrar",
-      update: "Atualizar",
-      player: "Player",
-      date: "Data e hora (seu horário)"
-    },
-    en: {
-      title: "The Lightbearer | Luminera | Blackout",
-      subtitle: "Register a lighting (reignite every 3h). Your timezone is detected automatically.",
-      register: "Light / Register",
-      update: "Refresh",
-      player: "Player",
-      date: "Date and Time (your timezone)"
-    },
-    es: {
-      title: "El Portador de Luz | Luminera | Blackout",
-      subtitle: "Registra un encendido (reencender cada 3h). Tu zona horaria se detecta automáticamente.",
-      register: "Encender / Registrar",
-      update: "Actualizar",
-      player: "Jugador",
-      date: "Fecha y hora (tu zona horaria)"
-    }
-  };
-
-  function updateFlagAndText() {
-    const lang = langSelector.value;
-    const code = flagMap[lang] || "br";
-    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
-    localStorage.setItem("lang", lang);
-
-    const t = translations[lang];
-    if (t) {
-      document.querySelector("h1").textContent = t.title;
-      document.querySelector(".subtitle").textContent = t.subtitle;
-      const playerLabel = document.querySelector('label[for="player"]');
-      const dateLabel = document.querySelector('label[for="date"]');
-      if (playerLabel) playerLabel.textContent = t.player;
-      if (dateLabel) dateLabel.textContent = t.date;
-      const btnSend = document.getElementById("btnSend");
-      const btnUpdate = document.getElementById("btnUpdate");
-      if (btnSend) btnSend.textContent = t.register;
-      if (btnUpdate) btnUpdate.textContent = t.update;
-    }
-  }
-
-  const savedLang = localStorage.getItem("lang") || "pt";
-  langSelector.value = savedLang;
-  updateFlagAndText();
-  langSelector.addEventListener("change", updateFlagAndText);
-
-  // ====== Server Save ======
-  function updateServerSave() {
-    const tzSP = "America/Sao_Paulo";
-    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
-    const ss = new Date(nowSP);
-    ss.setHours(6, 0, 0, 0);
-    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
-
-    const diffHours = (nowSP - ss) / 3600000;
-    const hours = Math.floor(diffHours);
-    const minutes = Math.floor((diffHours - hours) * 60);
-    const remaining = 60 - minutes;
-    document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
-  }
-
-  updateServerSave();
-  setInterval(updateServerSave, 60000);
-</script>
-<!-- ====== FIM ADDON ====== -->
-  
 </body>
 </html>
