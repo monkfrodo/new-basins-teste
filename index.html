@@ -212,7 +212,7 @@
     document.getElementById('dt').value=v;
   }
 
-  // === Botão Registrar Tempo Restante ===
+  // === Botão Registrar Tempo Restante (usa o MESMO fluxo do sendForm para evitar CORS) ===
   document.getElementById('updateTimeBtn').addEventListener('click', async () => {
     const basin = document.getElementById('basin').value;
     const player = document.getElementById('player').value.trim();
@@ -228,22 +228,16 @@
     const [h, m] = tempo.split(':').map(Number);
     const agora = new Date();
     const timestamp = agora.getTime() - ((h * 60 + m) * 60 * 1000);
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const params = new URLSearchParams({
-      fn: 'submit',
-      basin,
-      player,
-      ms: timestamp,
-      tz,
-      typed: `UPDATE - ${tempo} restante`
-    });
-    try {
-      await fetch(APPS, { method: 'POST', body: params });
-      alert('Tempo atualizado com sucesso!');
-      loadState();
-    } catch (err) {
-      alert('Erro ao registrar tempo. Tente novamente.');
-    }
+
+    const fd = new FormData();
+    fd.set('fn','submit');
+    fd.set('basin', basin);
+    fd.set('player', player);
+    fd.set('ms', String(timestamp));
+    fd.set('tz', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+    fd.set('typed', `UPDATE - ${tempo} restante`);
+
+    await sendForm(fd); // reaproveita o fluxo sem-CORS e com reload
   });
 
   document.getElementById('f').addEventListener('submit',e=>{
@@ -251,7 +245,8 @@
     const fd=new FormData(e.target);
     const dt=document.getElementById('dt').value;
     const ms=dt?new Date(dt).getTime():Date.now();
-    fd.set('typed',dt||''); fd.set('ms',String(ms));
+    fd.set('typed',dt||'');
+    fd.set('ms',String(ms));
     fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
     sendForm(fd);
   });
@@ -342,14 +337,14 @@
       document.querySelector("h1").textContent = t.title;
       document.querySelector(".subtitle").textContent = t.subtitle;
 
-      // Atualiza labels
+      // labels
       const labels = document.querySelectorAll("label");
       labels.forEach(label => {
-        if (label.textContent.includes("Player")) label.textContent = t.player;
-        if (label.textContent.includes("Data")) label.textContent = t.date;
+        if (label.textContent.includes("Player") || label.textContent.includes("Jugador")) label.textContent = t.player;
+        if (label.textContent.includes("Data") || label.textContent.includes("Date")) label.textContent = t.date;
       });
 
-      // Atualiza botões
+      // botões
       const btnSend = document.getElementById("sendBtn");
       const btnUpdateTime = document.getElementById("updateTimeBtn");
       const btnRefresh = document.getElementById("refreshBtn");
