@@ -3,241 +3,665 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>The Lightbearer | Luminera | Blackout</title>
+<title>The Lightbearer | Luminera | Vitória</title>
 <link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
 <link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
 <link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
+
 <style>
   :root {
     --bg: #0b1220;
     --accent: #3b82f6;
     --muted: #8fa1c2;
-    --safe: #22c55e;
-    --warn: #eab308;
-    --risk: #f59e0b;
-    --crit: #ef4444;
+    --card-bg: rgba(10,15,25,.9);
+    --border-soft: rgba(255,255,255,.08);
+    --gold: #facc15;
+    --success: #22c55e;
+    --danger: #ef4444;
     --radius: 16px;
   }
+
   * { box-sizing: border-box; }
+
   body {
     margin: 0;
     font-family: "Inter", system-ui, sans-serif;
-    background: var(--bg) url('https://static.tibia.com/images/news/lightbearer_280.png') no-repeat center top;
+    background:
+      var(--bg)
+      url('https://static.tibia.com/images/news/lightbearer_280.png')
+      no-repeat center top;
     background-size: cover;
     background-attachment: fixed;
     color: #e5ecff;
     min-height: 100vh;
     position: relative;
   }
+
   body::before{
-    content:"";position:fixed;inset:0;
-    background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.8));
-    pointer-events:none;z-index:0;
+    content:"";
+    position:fixed;
+    inset:0;
+    background:linear-gradient(
+      rgba(0,0,0,.75),
+      rgba(0,0,0,.9)
+    );
+    pointer-events:none;
+    z-index:0;
   }
-  .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:60px 16px 40px}
-  h1{font-size:28px;margin:0 0 10px;font-weight:800;text-align:center}
-  .subtitle{text-align:center;color:var(--muted);font-size:15px;margin-bottom:30px}
-  .card{background:rgba(10,15,25,.85);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;box-shadow:0 4px 25px rgba(0,0,0,.3);margin-bottom:30px}
-  .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:end}
-  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-  input,select{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#10182b;color:#e5ecff;font-size:15px}
-  .buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:22px}
-  button{padding:14px 26px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:.2s;min-width:140px;font-size:15px}
-  button:hover{opacity:.9;transform:translateY(-1px)}
-  .btn-primary{background:var(--accent);color:#fff}
-  .btn-secondary{background:#334155;color:#e5ecff}
-  @media (min-width:900px){.buttons{margin-top:30px;gap:20px}}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-  .basin{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;transition:.3s}
-  .basin:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
-  .title{display:flex;justify-content:space-between;align-items:center;font-weight:700}
-  .badge{font-size:11px;padding:4px 10px;border-radius:999px;font-weight:600}
-  .badge.safe{background:rgba(34,197,94,.15);color:#22c55e}
-  .badge.warn{background:rgba(234,179,8,.15);color:#eab308}
-  .badge.risk{background:rgba(245,158,11,.15);color:#f59e0b}
-  .badge.crit{background:rgba(239,68,68,.15);color:#ef4444;animation:blink 1s linear infinite}
-  @keyframes blink{50%{opacity:.5}}
-  .muted{color:var(--muted);font-size:13px}
-  .due{margin-top:8px;font-size:14px}
-  .bar{margin-top:10px;height:8px;background:#0b1220;border-radius:999px;overflow:hidden}
-  .fill{height:100%;width:0%;transition:width 1s linear,background .5s ease}
-  .fill.safe{background:#22c55e}.fill.warn{background:#eab308}.fill.risk{background:#f59e0b}.fill.crit{background:#ef4444;box-shadow:0 0 10px 2px #ef4444}
-  .footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
-  .icon{display:flex;justify-content:center;margin-top:25px}
-  .icon img{width:120px;opacity:.8}
-  @media (min-width:900px){.icon img{width:160px}}
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:1100px;
+    margin:0 auto;
+    padding:60px 16px 40px;
+  }
+
+  h1{
+    font-size:28px;
+    margin:0 0 10px;
+    font-weight:800;
+    text-align:center;
+  }
+
+  .subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:15px;
+    margin-bottom:30px;
+  }
+
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:0 4px 25px rgba(0,0,0,.35);
+    margin-bottom:24px;
+  }
+
+  .card-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:12px;
+  }
+
+  .card-header img.npc{
+    width:64px;
+    height:64px;
+    image-rendering:pixelated;
+  }
+
+  .card-title{
+    font-size:18px;
+    font-weight:700;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border-radius:999px;
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.02em;
+  }
+
+  .pill-success{
+    background:rgba(34,197,94,.12);
+    border:1px solid rgba(34,197,94,.5);
+    color:#bbf7d0;
+  }
+
+  .pill-gold{
+    background:rgba(250,204,21,.12);
+    border:1px solid rgba(250,204,21,.5);
+    color:#fef9c3;
+  }
+
+  .pill-danger{
+    background:rgba(239,68,68,.12);
+    border:1px solid rgba(239,68,68,.5);
+    color:#fecaca;
+  }
+
+  .spirit-row{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    margin:12px 0 4px;
+  }
+
+  .spirit-row img{
+    width:40px;
+    height:40px;
+    image-rendering:pixelated;
+    opacity:.9;
+  }
+
+  .victory-text{
+    font-size:15px;
+    line-height:1.6;
+    margin:8px 0 0;
+  }
+
+  .highlight{
+    color:var(--gold);
+    font-weight:600;
+  }
+
+  .layout-two-col{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:20px;
+  }
+
+  @media (max-width:768px){
+    .layout-two-col{
+      grid-template-columns:1fr;
+    }
+  }
+
+  h3{
+    margin:0 0 10px;
+    font-size:16px;
+  }
+
+  .buff-list,
+  .howto-list,
+  .reward-list{
+    margin:0;
+    padding-left:22px;
+    font-size:14px;
+    line-height:1.7;
+  }
+
+  .buff-list li + li,
+  .howto-list li + li,
+  .reward-list li + li{
+    margin-top:4px;
+  }
+
+  .reward-box{
+    background:rgba(15,23,42,.85);
+    border-radius:12px;
+    border:1px solid rgba(148,163,184,.35);
+    padding:14px 16px;
+  }
+
+  .reward-caption{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+
+  .reward-line-strong{
+    font-weight:600;
+  }
+
+  .footer{
+    margin-top:32px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    border-top:1px solid rgba(255,255,255,.12);
+    padding-top:18px;
+  }
+
+  .footer img{
+    width:120px;
+    opacity:.8;
+    image-rendering:pixelated;
+    margin-top:14px;
+  }
+
+  /* ÍCONES GENÉRICOS PARA AS RECOMPENSAS
+     -------------------------------------------------
+     Troque as URLs abaixo pelos ícones corretos do TibiaWiki,
+     ex.: background-image:url('https://www.tibiawiki.com.br/images/.../Midnight_Shard.gif')
+  */
+  .reward-icon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    margin-right:6px;
+    vertical-align:middle;
+    background-size:contain;
+    background-repeat:no-repeat;
+    image-rendering:pixelated;
+  }
+
+  .icon-midnight-shard    { /* background-image:url('...'); */ }
+  .icon-silver-fafnar     { /* background-image:url('...'); */ }
+  .icon-brocade-backpack  { /* background-image:url('...'); */ }
+  .icon-death-ring        { /* background-image:url('...'); */ }
+  .icon-ring-healing      { /* background-image:url('...'); */ }
+  .icon-christmas-token   { /* background-image:url('...'); */ }
+  .icon-gold-ingot        { /* background-image:url('...'); */ }
+  .icon-giant-pearl       { /* background-image:url('...'); */ }
+  .icon-small-topaz       { /* background-image:url('...'); */ }
+  .icon-time-ring         { /* background-image:url('...'); */ }
+  .icon-stealth-ring      { /* background-image:url('...'); */ }
+
+  .icon-moon-backpack     { /* background-image:url('...'); */ }
+  .icon-deed-ownership    { /* background-image:url('...'); */ }
+  .icon-golden-fafnar     { /* background-image:url('...'); */ }
+  .icon-celestial-torch   { /* background-image:url('...'); */ }
+  .icon-crown-backpack    { /* background-image:url('...'); */ }
+  .icon-demonic-essence   { /* background-image:url('...'); */ }
+  .icon-violet-gem        { /* background-image:url('...'); */ }
+  .icon-small-diamond     { /* background-image:url('...'); */ }
+
+  /* ADDON: seletor de idioma + server save
+     (mesmo estilo que você já estava usando)
+  */
+  .top-controls {
+    position: fixed;
+    top: 14px;
+    right: 18px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-select {
+    background: rgba(15,23,42,0.9);
+    border: 1px solid rgba(148,163,184,0.6);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 13px;
+    padding: 5px 26px 5px 30px;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    font-weight: 500;
+    background-image: url("https://flagcdn.com/w20/br.png");
+    background-repeat: no-repeat;
+    background-size: 18px auto;
+    background-position: 8px center;
+    transition: background-image 0.2s ease;
+  }
+
+  .lang-select option { color: #000; }
+
+  .ss-badge {
+    background: rgba(15,23,42,0.9);
+    border: 1px solid rgba(148,163,184,0.6);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .ss-badge img {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 600px) {
+    .top-controls {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      justify-content: center;
+      gap: 8px;
+    }
+  }
 </style>
 </head>
+
 <body>
 <div class="wrap">
-  <h1>The Lightbearer | Luminera | Blackout</h1>
-  <div class="subtitle">Registre um acendimento (reacender a cada 3h). Seu fuso é detectado automaticamente.</div>
-
-  <div class="card">
-    <form id="f">
-      <input type="hidden" name="fn" value="submit"/>
-      <div class="form">
-        <div><label>Player</label><input name="player" id="player" placeholder="Seu char" autocomplete="off"/></div>
-        <div><label>Basin</label><select name="basin" id="basin"></select></div>
-        <div><label>Data e hora (seu horário)</label><input id="dt" type="datetime-local"/></div>
-      </div>
-
-      <div class="buttons">
-        <button type="button" id="nowBtn" class="btn-secondary">Agora</button>
-        <button type="button" id="tempoRestanteBtn" class="btn-secondary">Tempo Restante</button>
-        <button type="submit" id="sendBtn" class="btn-primary">Acender / Registrar</button>
-      </div>
-
-      <input type="hidden" name="typed" id="typed"/>
-      <input type="hidden" name="tz" id="tz"/>
-      <input type="hidden" name="ms" id="ms"/>
-    </form>
-    <div id="status" class="muted" style="text-align:center;margin-top:10px;"></div>
+  <h1 id="headline">The Lightbearer | Luminera | Vitória</h1>
+  <div class="subtitle" id="subtitle">
+    Seu mundo manteve todos os dez basins acesos. Agora é hora de colher as recompensas.
   </div>
 
-  <div class="grid" id="grid"></div>
+  <!-- CARD: MENSAGEM DE VITÓRIA + BUFF GLOBAL -->
+  <div class="card" id="victory-card">
+    <div class="card-header">
+      <div>
+        <div class="pill pill-success" id="victory-pill">Vitória do servidor</div>
+        <div class="card-title" id="victory-title">
+          Todos os dez Lightbearer basins permaneceram acesos!
+        </div>
+      </div>
+    </div>
+
+    <div class="spirit-row">
+      <!-- Troque a URL da imagem se quiser outro Spirit of Light -->
+      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
+    </div>
+
+    <p class="victory-text" id="victory-text">
+      <span class="highlight">Your world managed to keep all ten lightbearer basins burning!</span>
+      Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.
+    </p>
+
+    <div style="margin-top:18px;" class="layout-two-col">
+      <div>
+        <div class="pill pill-gold" style="margin-bottom:6px;" id="buff-pill">
+          Bônus globais até 30 de novembro
+        </div>
+        <ul class="buff-list" id="buff-list">
+          <li><strong>+10%</strong> de experiência obtida.</li>
+          <li><strong>+3%</strong> de life leech.</li>
+          <li><strong>+3%</strong> de mana leech.</li>
+          <li>Experiência compartilhada ainda mais forte para hunts em equipe.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pill pill-danger" style="margin-bottom:6px;" id="tip-pill">
+          Aproveite enquanto dura
+        </div>
+        <p class="victory-text" id="buff-text">
+          Esse tipo de bônus não aparece sempre. Organize suas hunts, chame o time da guild,
+          limpe seus task logs e use esses dias para adiantar tudo o que você vinha adiando.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD: LUCIOUS / INSTRUÇÕES -->
+  <div class="card" id="lucius-card">
+    <div class="card-header">
+      <img class="npc" src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif" alt="Lucius">
+      <div>
+        <div class="card-title" id="lucius-title">Como receber suas recompensas</div>
+        <div class="reward-caption" id="lucius-caption">
+          As recompensas variam conforme quantos basins você acendeu durante o evento.
+        </div>
+      </div>
+    </div>
+
+    <ul class="howto-list" id="lucius-list">
+      <li>Vá até <strong>Yalahar</strong> e fale com <strong>Lucius</strong> no templo.</li>
+      <li>Use palavras-chave como <em>lightbearer</em>, <em>reward</em> ou siga o diálogo padrão do NPC.</li>
+      <li>Ao concluir a conversa, você será teleportado para o <strong>temple</strong> e poderá seguir para <strong>Kazordoon</strong>.</li>
+      <li>Em Kazordoon, procure a <strong>sala de recompensas</strong> e a <strong>estátua de Fafnar</strong> para reclamar seus prêmios.</li>
+      <li>Lembre-se: alguns prêmios, como a <strong>Moon Backpack</strong>, só podem ser obtidos na primeira participação bem-sucedida.</li>
+    </ul>
+  </div>
+
+  <!-- CARD: RECOMPENSAS -->
+  <div class="card" id="rewards-card">
+    <div class="card-header">
+      <div>
+        <div class="pill pill-gold" id="rewards-pill">Recompensas do Lightbearer</div>
+        <div class="card-title" id="rewards-title">
+          O que você recebe pelos basins acesos
+        </div>
+      </div>
+    </div>
+
+    <div class="layout-two-col">
+      <!-- 1 a 9 basins -->
+      <div class="reward-box">
+        <h3 id="partial-title">Para quem acendeu de 1 a 9 basins</h3>
+        <p class="reward-caption" id="partial-caption">
+          Se pelo menos um basin foi aceso pelo seu personagem, você recebe:
+        </p>
+        <ul class="reward-list" id="partial-list">
+          <li>
+            <span class="reward-icon icon-midnight-shard"></span>
+            <span class="reward-line-strong">20x Midnight Shards</span>
+          </li>
+          <li>
+            <span class="reward-icon icon-silver-fafnar"></span>
+            1x Silver Fafnar Trophy
+          </li>
+          <li>
+            <span class="reward-icon icon-brocade-backpack"></span>
+            1x Brocade Backpack contendo:
+            <ul class="reward-list">
+              <li><span class="reward-icon icon-death-ring"></span>1x Death Ring</li>
+              <li><span class="reward-icon icon-ring-healing"></span>1x Ring of Healing</li>
+              <li><span class="reward-icon icon-christmas-token"></span>50x Christmas Tokens</li>
+              <li><span class="reward-icon icon-gold-ingot"></span>2x Gold Ingots</li>
+              <li><span class="reward-icon icon-giant-pearl"></span>1x Giant Shimmering Pearl</li>
+              <li><span class="reward-icon icon-small-topaz"></span>30x Small Topazes</li>
+              <li><span class="reward-icon icon-time-ring"></span>1x Time Ring</li>
+              <li><span class="reward-icon icon-stealth-ring"></span>1x Stealth Ring</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Todos os 10 basins -->
+      <div class="reward-box">
+        <h3 id="all-title">Para quem acendeu todos os 10 basins</h3>
+        <p class="reward-caption" id="all-caption">
+          Além de tudo o que foi listado ao lado, você ainda recebe:
+        </p>
+        <ul class="reward-list" id="all-list">
+          <li>
+            <span class="reward-icon icon-moon-backpack"></span>
+            1x Moon Backpack <span class="reward-caption">(somente na primeira participação)</span>
+          </li>
+          <li>
+            <span class="reward-icon icon-deed-ownership"></span>
+            1x Deed of Ownership
+          </li>
+          <li>
+            <span class="reward-icon icon-brocade-backpack"></span>
+            1x Brocade Backpack contendo:
+            <ul class="reward-list">
+              <li><span class="reward-icon icon-midnight-shard"></span>10x Midnight Shards</li>
+              <li><span class="reward-icon icon-golden-fafnar"></span>1x Golden Fafnar Trophy</li>
+              <li><span class="reward-icon icon-celestial-torch"></span>1x Celestial Torch <span class="reward-caption">(chance rara)</span></li>
+            </ul>
+          </li>
+          <li>
+            <span class="reward-icon icon-crown-backpack"></span>
+            1x Crown Backpack contendo:
+            <ul class="reward-list">
+              <li><span class="reward-icon icon-ring-healing"></span>2x Ring of Healings</li>
+              <li><span class="reward-icon"></span>1x Might Ring</li>
+              <li><span class="reward-icon icon-gold-ingot"></span>4x Gold Ingots</li>
+              <li><span class="reward-icon icon-demonic-essence"></span>50x Demonic Essences</li>
+              <li><span class="reward-icon icon-violet-gem"></span>1x Violet Gem</li>
+              <li><span class="reward-icon icon-small-diamond"></span>40x Small Diamonds</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <div class="footer">
-    SLA 3h · Exibição base: <span id="tzLabel"></span><br><br>
-    <strong>Blackout Guild | Todos os direitos reservados.</strong>
-    <div class="icon">
-      <img src="https://static.tibia.com/images/news/lightbearer_280.png" alt="Lightbearer Icon">
-    </div>
+    <span id="footer-text">
+      Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
+    </span>
+    <br>
+    <img src="https://static.tibia.com/images/news/lightbearer_280.png" alt="Lightbearer Icon">
+  </div>
+</div>
+
+<!-- ====== ADDON: Idioma + Server Save ====== -->
+<div class="top-controls">
+  <select id="langSelector" class="lang-select">
+    <option value="pt" selected>Português</option>
+    <option value="en">English</option>
+    <option value="es">Español (MX)</option>
+  </select>
+
+  <div id="ssBadge" class="ss-badge">
+    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
+    <span id="ssText">SS+0 (calculando...)</span>
   </div>
 </div>
 
 <script>
-  const APPS = "https://script.google.com/macros/s/AKfycbz5bLDdo6VJZrEGs32jCqFT9dG8Cjx5IWPcYzILF1fi_dkw0UvzUlxv21UZWRytFBgS/exec";
-  const FULL = 3*3600;
-  const pad = n => String(n).padStart(2,'0');
-  const state = { items:[], slaHours:3, serverNowMs:null, clientNowAtFetch:null };
+  // ----- Idiomas -----
+  const langSelector = document.getElementById("langSelector");
+  const flagMap = { pt: "br", en: "us", es: "mx" };
 
-  function fmtLocal(iso){
-    if(!iso) return "";
-    const d = new Date(iso);
-    return d.toLocaleString('pt-BR',{hour12:false});
-  }
-  function fmtCountdown(sec){
-    const s=Math.abs(sec), sign=sec<0?'-':'';
-    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;
-    return `${sign}${pad(h)}:${pad(m)}:${pad(ss)}`;
-  }
-  function bucket(sec){
-    if(sec==null) return 'safe';
-    if(sec>=120*60) return 'safe';
-    if(sec>=60*60)  return 'warn';
-    if(sec>=30*60)  return 'risk';
-    return 'crit';
-  }
-
-  async function sendForm(fd){
-    try{
-      document.getElementById('status').textContent='Enviando...';
-      await fetch(APPS,{method:"POST",mode:"no-cors",body:fd});
-      document.getElementById('status').textContent='Registrado!';
-      loadState();
-    }catch(e){
-      document.getElementById('status').textContent='Erro ao enviar.';
+  const translations = {
+    pt: {
+      headline: "The Lightbearer | Luminera | Vitória",
+      subtitle: "Seu mundo manteve todos os dez basins acesos. Agora é hora de colher as recompensas.",
+      victoryPill: "Vitória do servidor",
+      victoryTitle: "Todos os dez Lightbearer basins permaneceram acesos!",
+      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.",
+      buffPill: "Bônus globais até 30 de novembro",
+      buffList: `
+        <li><strong>+10%</strong> de experiência obtida.</li>
+        <li><strong>+3%</strong> de life leech.</li>
+        <li><strong>+3%</strong> de mana leech.</li>
+        <li>Experiência compartilhada ainda mais forte para hunts em equipe.</li>
+      `,
+      tipPill: "Aproveite enquanto dura",
+      buffText: "Esse tipo de bônus não aparece sempre. Organize suas hunts, chame o time da guild, limpe seus task logs e use esses dias para adiantar tudo o que você vinha adiando.",
+      luciusTitle: "Como receber suas recompensas",
+      luciusCaption: "As recompensas variam conforme quantos basins você acendeu durante o evento.",
+      luciusList: `
+        <li>Vá até <strong>Yalahar</strong> e fale com <strong>Lucius</strong> no templo.</li>
+        <li>Use palavras-chave como <em>lightbearer</em>, <em>reward</em> ou siga o diálogo padrão do NPC.</li>
+        <li>Ao concluir a conversa, você será teleportado para o <strong>temple</strong> e poderá seguir para <strong>Kazordoon</strong>.</li>
+        <li>Em Kazordoon, procure a <strong>sala de recompensas</strong> e a <strong>estátua de Fafnar</strong> para reclamar seus prêmios.</li>
+        <li>Lembre-se: alguns prêmios, como a <strong>Moon Backpack</strong>, só podem ser obtidos na primeira participação bem-sucedida.</li>
+      `,
+      rewardsPill: "Recompensas do Lightbearer",
+      rewardsTitle: "O que você recebe pelos basins acesos",
+      partialTitle: "Para quem acendeu de 1 a 9 basins",
+      partialCaption: "Se pelo menos um basin foi aceso pelo seu personagem, você recebe:",
+      allTitle: "Para quem acendeu todos os 10 basins",
+      allCaption: "Além de tudo o que foi listado ao lado, você ainda recebe:",
+      footerText: "Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz."
+    },
+    en: {
+      headline: "The Lightbearer | Luminera | Victory",
+      subtitle: "Your world kept all ten basins burning. Time to claim your rewards.",
+      victoryPill: "World victory",
+      victoryTitle: "All ten Lightbearer basins remained lit!",
+      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Enjoy the increased shared experience and global bonuses while the event lasts.",
+      buffPill: "Global bonuses until November 30th",
+      buffList: `
+        <li><strong>+10%</strong> experience gain.</li>
+        <li><strong>+3%</strong> life leech.</li>
+        <li><strong>+3%</strong> mana leech.</li>
+        <li>Shared experience buffed for team hunts.</li>
+      `,
+      tipPill: "Make it count",
+      buffText: "This kind of bonus is rare. Schedule your hunts, bring your guild, clear your task log and use these days to push everything forward.",
+      luciusTitle: "How to claim your rewards",
+      luciusCaption: "Your rewards depend on how many basins you lit during the event.",
+      luciusList: `
+        <li>Travel to <strong>Yalahar</strong> and talk to <strong>Lucius</strong> in the temple.</li>
+        <li>Use keywords like <em>lightbearer</em> or <em>reward</em> or follow his standard dialogue.</li>
+        <li>After the dialogue, you will be teleported to the <strong>temple</strong> and can then head to <strong>Kazordoon</strong>.</li>
+        <li>In Kazordoon, look for the <strong>reward room</strong> and <strong>Fafnar's statue</strong> to receive your prizes.</li>
+        <li>Remember: some items, like the <strong>Moon Backpack</strong>, can only be obtained on your first successful participation.</li>
+      `,
+      rewardsPill: "Lightbearer rewards",
+      rewardsTitle: "What you receive for keeping the basins lit",
+      partialTitle: "If you lit between 1 and 9 basins",
+      partialCaption: "If your character lit at least one basin, you receive:",
+      allTitle: "If you lit all 10 basins",
+      allCaption: "On top of everything listed on the left, you also receive:",
+      footerText: "Luminera kept the Lightbearer flame alive. Congratulations to all guardians of the light."
+    },
+    es: {
+      headline: "The Lightbearer | Luminera | Victoria",
+      subtitle: "Tu mundo mantuvo encendidos los diez basins. Ahora toca cobrar las recompensas.",
+      victoryPill: "Victoria del servidor",
+      victoryTitle: "¡Los diez basins del Lightbearer permanecieron encendidos!",
+      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Aprovechen la experiencia compartida aumentada y los bonus mientras dure el evento.",
+      buffPill: "Bonus globales hasta el 30 de noviembre",
+      buffList: `
+        <li><strong>+10%</strong> de experiencia ganada.</li>
+        <li><strong>+3%</strong> de life leech.</li>
+        <li><strong>+3%</strong> de mana leech.</li>
+        <li>Experiencia compartida todavía más fuerte para las hunts en equipo.</li>
+      `,
+      tipPill: "Aprovecha al máximo",
+      buffText: "Este tipo de bonus es raro. Organiza tus hunts, llama a tu guild y usa estos días para adelantar todo lo que venías posponiendo.",
+      luciusTitle: "Cómo recibir tus recompensas",
+      luciusCaption: "Las recompensas dependen de cuántos basins encendiste durante el evento.",
+      luciusList: `
+        <li>Ve a <strong>Yalahar</strong> y habla con <strong>Lucius</strong> en el templo.</li>
+        <li>Usa palabras clave como <em>lightbearer</em> o <em>reward</em> o sigue el diálogo normal del NPC.</li>
+        <li>Al terminar la conversación, serás enviado al <strong>temple</strong> y luego podrás ir a <strong>Kazordoon</strong>.</li>
+        <li>En Kazordoon, busca la <strong>sala de recompensas</strong> y la <strong>estatua de Fafnar</strong> para reclamar tus premios.</li>
+        <li>Recuerda: algunos ítems, como la <strong>Moon Backpack</strong>, solo se pueden obtener en la primera participación exitosa.</li>
+      `,
+      rewardsPill: "Recompensas del Lightbearer",
+      rewardsTitle: "Lo que recibes por mantener los basins encendidos",
+      partialTitle: "Si encendiste entre 1 y 9 basins",
+      partialCaption: "Si tu personaje encendió al menos un basin, recibes:",
+      allTitle: "Si encendiste los 10 basins",
+      allCaption: "Además de todo lo listado al lado, también recibes:",
+      footerText: "Luminera mantuvo viva la llama del Lightbearer. Felicitaciones a todos los guardianes de la luz."
     }
+  };
+
+  function applyTranslations(lang){
+    const t = translations[lang] || translations.pt;
+    document.getElementById("headline").textContent   = t.headline;
+    document.getElementById("subtitle").textContent   = t.subtitle;
+    document.getElementById("victory-pill").textContent = t.victoryPill;
+    document.getElementById("victory-title").textContent = t.victoryTitle;
+    document.getElementById("victory-text").innerHTML = t.victoryText;
+    document.getElementById("buff-pill").textContent  = t.buffPill;
+    document.getElementById("buff-list").innerHTML    = t.buffList;
+    document.getElementById("tip-pill").textContent   = t.tipPill;
+    document.getElementById("buff-text").textContent  = t.buffText;
+    document.getElementById("lucius-title").textContent = t.luciusTitle;
+    document.getElementById("lucius-caption").textContent = t.luciusCaption;
+    document.getElementById("lucius-list").innerHTML  = t.luciusList;
+    document.getElementById("rewards-pill").textContent = t.rewardsPill;
+    document.getElementById("rewards-title").textContent = t.rewardsTitle;
+    document.getElementById("partial-title").textContent = t.partialTitle;
+    document.getElementById("partial-caption").textContent = t.partialCaption;
+    document.getElementById("all-title").textContent   = t.allTitle;
+    document.getElementById("all-caption").textContent = t.allCaption;
+    document.getElementById("footer-text").textContent = t.footerText;
   }
 
-  function loadState(){
-    document.getElementById('status').textContent='Carregando...';
-    const cb='cb_'+Math.random().toString(36).slice(2);
-    window[cb]=data=>{
-      delete window[cb];
-      document.getElementById('status').textContent='';
-      state.items=data.items||[];
-      state.slaHours=data.slaHours;
-      state.serverNowMs=data.now||Date.now();
-      state.clientNowAtFetch=Date.now();
-      render(); startTick();
-    };
-    const s=document.createElement('script');
-    s.src=APPS+'?fn=state&callback='+cb;
-    document.body.appendChild(s);
+  function updateFlag(){
+    const lang = langSelector.value;
+    const code = flagMap[lang] || "br";
+    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
+    localStorage.setItem("langLightbearerVictory", lang);
+    applyTranslations(lang);
   }
 
-  function render(){
-    document.getElementById('tzLabel').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const sel=document.getElementById('basin'); sel.innerHTML='';
-    state.items.forEach(it=>{
-      const o=document.createElement('option'); o.value=it.basin; o.textContent=it.basin; sel.appendChild(o);
-    });
-    const grid=document.getElementById('grid'); grid.innerHTML='';
-    state.items.forEach(it=>{
-      const div=document.createElement('div'); div.className='basin';
-      const k=bucket(it.remainingSec);
-      const title=`<div class="title"><span>${it.basin}</span><span class="badge ${k}">${{safe:'SEGURO',warn:'ATENÇÃO',risk:'RISCO',crit:'CRÍTICO'}[k]}</span></div>`;
-      const last=it.lastIsoUtc?`<div class="muted">Último: <b>${fmtLocal(it.lastIsoUtc)}</b> · ${it.lastPlayer||''}</div>`:`<div class="muted">Sem registros ainda</div>`;
-      const next=it.nextDueIsoBase?`<div class="due">Próx.: <b>${fmtLocal(it.nextDueIsoBase)}</b> · <span id="cd-${it.basin.replace(/[^a-z0-9]/gi,'')}"></span></div>`:'';
-      const bar=`<div class="bar"><div class="fill ${k}" id="fill-${it.basin.replace(/[^a-z0-9]/gi,'')}"></div></div>`;
-      div.innerHTML=title+last+next+bar;
-      grid.appendChild(div);
-    });
+  const savedLang = localStorage.getItem("langLightbearerVictory") || "pt";
+  langSelector.value = savedLang;
+  updateFlag();
+  langSelector.addEventListener("change", updateFlag);
+
+  // ----- Server Save badge -----
+  function updateServerSave() {
+    const tzSP = "America/Sao_Paulo";
+    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
+    const ss = new Date(nowSP);
+    ss.setHours(6, 0, 0, 0);
+    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
+
+    const diffHours = (nowSP - ss) / 3600000;
+    const hours = Math.floor(diffHours);
+    const minutes = Math.floor((diffHours - hours) * 60);
+    const remaining = 60 - minutes;
+    document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
   }
 
-  function startTick(){
-    if(window._tick) clearInterval(window._tick);
-    const drift=(state.serverNowMs??Date.now())-(state.clientNowAtFetch??Date.now());
-    window._tick=setInterval(()=>{
-      state.items.forEach(it=>{
-        if(it.remainingSec==null) return;
-        const now=Date.now()+drift;
-        if(!it._nextDueMs) it._nextDueMs=state.serverNowMs+it.remainingSec*1000;
-        const rem=Math.floor((it._nextDueMs-now)/1000);
-        const el=document.getElementById('cd-'+it.basin.replace(/[^a-z0-9]/gi,''));
-        if(el) el.textContent=fmtCountdown(rem);
-        const fill=document.getElementById('fill-'+it.basin.replace(/[^a-z0-9]/gi,''));
-        if(fill){
-          const spent=Math.max(0,Math.min(FULL,FULL-Math.max(0,rem)));
-          fill.style.width=((spent/FULL)*100).toFixed(1)+'%';
-          const newK=bucket(rem);
-          ['safe','warn','risk','crit'].forEach(c=>fill.classList.remove(c));
-          fill.classList.add(newK);
-        }
-      });
-    },1000);
-  }
-
-  function setNow(){
-    const d=new Date();
-    const v=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    document.getElementById('dt').value=v;
-  }
-
-  // === BOTÃO DE TEMPO RESTANTE ===
-  document.getElementById('tempoRestanteBtn').addEventListener('click', () => {
-    const input = prompt("Quanto tempo RESTA para o Basin? (ex: 2:30 para 2h30)");
-    if (!input) return;
-
-    const [h, m] = input.split(':').map(Number);
-    if (isNaN(h)) return alert("Formato inválido. Use HH:MM, ex: 2:30");
-
-    const tempoRestanteMin = (h * 60) + (m || 0);
-    const diferencaMin = (3 * 60) - tempoRestanteMin;
-
-    const d = new Date();
-    d.setMinutes(d.getMinutes() - diferencaMin);
-
-    const pad = n => String(n).padStart(2, '0');
-    const v = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    document.getElementById('dt').value = v;
-    alert(`Horário ajustado para ${v.replace('T',' às ')} (retroativo).`);
-  });
-
-  document.getElementById('f').addEventListener('submit',e=>{
-    e.preventDefault();
-    const fd=new FormData(e.target);
-    const dt=document.getElementById('dt').value;
-    const ms=dt?new Date(dt).getTime():Date.now();
-    fd.set('typed',dt||''); fd.set('ms',String(ms));
-    fd.set('tz',Intl.DateTimeFormat().resolvedOptions().timeZone||'');
-    sendForm(fd);
-  });
-
-  document.getElementById('nowBtn').addEventListener('click',setNow);
-  setNow(); loadState();
+  updateServerSave();
+  setInterval(updateServerSave, 60000);
 </script>
+
 </body>
 </html>
