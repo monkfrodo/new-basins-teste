@@ -73,6 +73,7 @@
       background-position: 10px center;
       background-size: 20px;
       appearance: none;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
@@ -142,6 +143,10 @@
       line-height: 1.6;
     }
 
+    .hero-bonus strong {
+      color: var(--gold);
+    }
+
     .spirit-strip {
       margin-top: 22px;
       display: flex;
@@ -193,10 +198,29 @@
       image-rendering: pixelated;
     }
 
+    .card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 4px 0 10px;
+    }
+
+    .steps {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
     .steps li,
     .bonus-list li {
       margin-bottom: 8px;
       font-size: 15px;
+      color: #e5e7eb;
+    }
+
+    .bonus-list {
+      list-style: disc;
+      padding-left: 18px;
+      margin-top: 6px;
     }
 
     .highlight-box {
@@ -207,6 +231,7 @@
       border: 1px solid rgba(59,130,246,0.4);
       font-size: 14px;
       line-height: 1.5;
+      color: #dbeafe;
     }
 
     /* ===== Rewards ===== */
@@ -232,6 +257,7 @@
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.5);
       background: rgba(15,23,42,0.92);
+      color: #e5e7eb;
     }
 
     .reward-grid {
@@ -278,6 +304,11 @@
       color: var(--muted);
     }
 
+    .footer strong {
+      display: block;
+      margin-top: 4px;
+      color: #e5e7eb;
+    }
   </style>
 </head>
 
@@ -323,10 +354,10 @@
     </div>
 
     <div class="spirit-strip">
-      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif">
-      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif">
-      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif">
-      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
     </div>
   </div>
 
@@ -336,7 +367,7 @@
     <!-- LUCÍUS -->
     <section class="card">
       <div class="card-title">
-        <img src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif">
+        <img src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif" alt="Lucius">
         <span data-i18n="luciusTitle">Como pegar as recompensas</span>
       </div>
 
@@ -346,12 +377,12 @@
 
       <ul class="steps">
         <li data-i18n="luciusStep1">Vá até Yalahar e encontre o NPC Lucius.</li>
-        <li data-i18n="luciusStep2">Fale com ele (hi) e diga "lightbearer". Você será teleportado ao templo.</li>
-        <li data-i18n="luciusStep3">No templo, vá até Kazordoon para acessar a sala de recompensas.</li>
+        <li data-i18n="luciusStep2">Fale com ele (hi) e diga "lightbearer". Você será teleportado para o templo.</li>
+        <li data-i18n="luciusStep3">No templo, siga para Kazordoon para acessar a sala de recompensas e a estátua de Fafnar.</li>
       </ul>
 
       <div class="highlight-box" data-i18n="luciusNote">
-        Dica: vá com o personagem que participou do evento para garantir todas as recompensas.
+        Não deixe para o último dia: organize seu tempo, passe em Yalahar e garanta tudo com calma.
       </div>
     </section>
 
@@ -368,12 +399,12 @@
 
       <ul class="bonus-list">
         <li data-i18n="bonusItem1">+10% experience em todas as hunts.</li>
-        <li data-i18n="bonusItem2">+3% life leech — mais sustain.</li>
-        <li data-i18n="bonusItem3">+3% mana leech — mais mana para spells.</li>
+        <li data-i18n="bonusItem2">+3% life leech — mais sustain em combate.</li>
+        <li data-i18n="bonusItem3">+3% mana leech — mais mana para spammar spells.</li>
       </ul>
 
       <p data-i18n="bonusOutro">
-        Aproveite para upar, desbloquear acessos e organizar times.
+        Aproveite este período para fazer quests pendentes, desbloquear acessos e organizar grandes times de hunt.
       </p>
     </section>
   </div>
@@ -386,97 +417,97 @@
     </div>
 
     <p data-i18n="group1Desc">
-      Ao acender pelo menos 1 basin, você recebe:
+      Ao acender pelo menos 1 basin durante o evento, você recebe:
     </p>
 
     <div class="reward-grid">
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/1/13/Silver_Fafnar_Trophy.gif">
+        <img src="https://www.tibiawiki.com.br/images/1/13/Silver_Fafnar_Trophy.gif" alt="Silver Fafnar Trophy">
         <div>
           <div class="reward-text-title">Silver Fafnar Trophy</div>
           <div class="reward-text-desc" data-i18n="g1Silver">
-            Troféu comemorativo pela participação.
+            Troféu comemorativo pela sua participação em manter as chamas acesas.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/4/47/Midnight_Shard.gif">
+        <img src="https://www.tibiawiki.com.br/images/4/47/Midnight_Shard.gif" alt="Midnight Shard">
         <div>
           <div class="reward-text-title">Midnight Shards</div>
           <div class="reward-text-desc" data-i18n="g1Midnight">
-            Fragmentos que podem ser trocados por XP ou gold.
+            Fragmentos que podem ser trocados por experiência ou dinheiro.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/d/d8/Brocade_Backpack.gif">
+        <img src="https://www.tibiawiki.com.br/images/d/d8/Brocade_Backpack.gif" alt="Brocade Backpack">
         <div>
           <div class="reward-text-title">Brocade Backpack</div>
           <div class="reward-text-desc" data-i18n="g1Brocade">
-            Mochila recheada com rings e consumíveis.
+            Mochila recheada com rings e diversos consumíveis.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/d/d1/Death_Ring.gif">
+        <img src="https://www.tibiawiki.com.br/images/d/d1/Death_Ring.gif" alt="Death Ring">
         <div>
           <div class="reward-text-title">Death Ring</div>
           <div class="reward-text-desc">
-            Ring especial incluído na recompensa.
+            Ring especial incluído no pacote de recompensas.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/1/13/Ring_of_Healing.gif">
+        <img src="https://www.tibiawiki.com.br/images/1/13/Ring_of_Healing.gif" alt="Ring of Healing">
         <div>
           <div class="reward-text-title">Ring of Healing</div>
           <div class="reward-text-desc">
-            Suporte extra para hunts difíceis.
+            Suporte extra para hunts mais perigosas.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/0/0d/Time_Ring.gif">
+        <img src="https://www.tibiawiki.com.br/images/0/0d/Time_Ring.gif" alt="Time Ring">
         <div>
-          <div class="reward-text-title">Time Ring & Stealth Ring</div>
+          <div class="reward-text-title">Time Ring &amp; Stealth Ring</div>
           <div class="reward-text-desc">
-            Mobilidade e segurança extra.
+            Time Ring e Stealth Ring adicionam mobilidade e segurança ao seu kit.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/e/ef/Christmas_Token.gif">
+        <img src="https://www.tibiawiki.com.br/images/e/ef/Christmas_Token.gif" alt="Christmas Token">
         <div>
           <div class="reward-text-title">Christmas Tokens</div>
           <div class="reward-text-desc">
-            Tokens e outros itens valiosos.
+            Christmas Tokens, Gold Ingots e outros itens trocáveis para ainda mais valor.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/1/1a/Gold_Ingot.gif">
+        <img src="https://www.tibiawiki.com.br/images/1/1a/Gold_Ingot.gif" alt="Gold Ingot">
         <div>
           <div class="reward-text-title">Gold Ingots</div>
           <div class="reward-text-desc">
-            Itens de alto valor comercial.
+            Gold Ingots e outras valuables para turbinar seu patrimônio.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/0/0e/Giant_Shimmering_Pearl.gif">
+        <img src="https://www.tibiawiki.com.br/images/0/0e/Giant_Shimmering_Pearl.gif" alt="Giant Shimmering Pearl">
         <div>
-          <div class="reward-text-title">Giant Shimmering Pearl</div>
+          <div class="reward-text-title">Giant Shimmering Pearl &amp; Small Topaz</div>
           <div class="reward-text-desc">
-            Perolas raras e topazes.
+            Giant Shimmering Pearl e Small Topazes fecham o pacote de loot do primeiro conjunto.
           </div>
         </div>
       </div>
@@ -488,98 +519,105 @@
     </h3>
 
     <p data-i18n="group2Desc">
-      Quem ajudou a manter TODOS acesos recebe também:
+      Se você fez parte da equipe que manteve todos os dez basins acesos, tem acesso a um conjunto ainda mais exclusivo:
     </p>
 
     <div class="reward-grid">
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/b/b1/Golden_Fafnar_Trophy.gif">
+        <img src="https://www.tibiawiki.com.br/images/b/b1/Golden_Fafnar_Trophy.gif" alt="Golden Fafnar Trophy">
         <div>
           <div class="reward-text-title">Golden Fafnar Trophy</div>
           <div class="reward-text-desc" data-i18n="g2Golden">
-            Troféu dourado exclusivo.
+            A versão dourada do troféu, símbolo máximo de que você foi um verdadeiro guardião da luz.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/c/ce/Celestial_Torch.gif">
+        <img src="https://www.tibiawiki.com.br/images/c/ce/Celestial_Torch.gif" alt="Celestial Torch">
         <div>
           <div class="reward-text-title">Celestial Torch</div>
           <div class="reward-text-desc" data-i18n="g2Celestial">
-            Tocha celestial única do evento.
+            Há uma chance de receber uma Celestial Torch especial como lembrança permanente do Lightbearer (não é garantido).
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/1/13/Crown_Backpack.gif">
+        <img src="https://www.tibiawiki.com.br/images/1/13/Crown_Backpack.gif" alt="Crown Backpack">
         <div>
           <div class="reward-text-title">Crown Backpack</div>
           <div class="reward-text-desc">
-            Com rings, essências e gemas valiosas.
+            Uma Crown Backpack com Might Ring, Rings of Healing, Demonic Essences, Gold Ingots, Violet Gem e Small Diamonds.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/b/b5/Might_Ring.gif">
+        <img src="https://www.tibiawiki.com.br/images/b/b5/Might_Ring.gif" alt="Might Ring">
         <div>
           <div class="reward-text-title">Might Ring</div>
           <div class="reward-text-desc">
-            Ring poderoso incluso no set.
+            Might Ring e outros rings poderosos ajudando nas hunts mais puxadas.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/e/ef/Demonic_Essence.gif">
+        <img src="https://www.tibiawiki.com.br/images/e/ef/Demonic_Essence.gif" alt="Demonic Essence">
         <div>
           <div class="reward-text-title">Demonic Essence</div>
           <div class="reward-text-desc">
-            Essências, violet gem e diamonds.
+            Demonic Essences, Violet Gem e Small Diamonds como parte do loot premium.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/e/ee/Violet_Gem.gif">
+        <img src="https://www.tibiawiki.com.br/images/e/ee/Violet_Gem.gif" alt="Violet Gem">
         <div>
-          <div class="reward-text-title">Violet Gem & Small Diamonds</div>
+          <div class="reward-text-title">Violet Gem &amp; Small Diamonds</div>
           <div class="reward-text-desc">
-            Itens para trade ou craft.
+            Violet Gem e uma boa quantidade de Small Diamonds para negociar ou usar.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/3/31/Moon_Backpack.gif">
+        <img src="https://www.tibiawiki.com.br/images/3/31/Moon_Backpack.gif" alt="Moon Backpack">
         <div>
           <div class="reward-text-title">Moon Backpack</div>
           <div class="reward-text-desc">
-            Contém o documento da mount.
+            Moon Backpack contendo um documento especial que libera a montaria do Blazebringer.
           </div>
         </div>
       </div>
 
       <div class="reward-item">
-        <img src="https://www.tibiawiki.com.br/images/e/ea/Document_%28Certificate%29.gif">
+        <img src="https://www.tibiawiki.com.br/images/e/ea/Document_%28Certificate%29.gif" alt="Document (Certificate)">
         <div>
           <div class="reward-text-title">Special Document</div>
           <div class="reward-text-desc">
-            Item necessário para o Blazebringer.
+            Document (Certificate) utilizado para obter a mount do Blazebringer.
           </div>
         </div>
       </div>
 
     </div>
 
+    <div class="spirit-strip" style="margin-top:22px;">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
+      <img src="https://www.tibiawiki.com.br/images/3/30/Spirit_of_Light.gif" alt="Spirit of Light">
+    </div>
+
   </section>
 
   <div class="footer">
-    <div data-i18n="footerText">Luminera manteve acesa a chama do Lightbearer.</div>
-    <strong>Blackout Guild — Todos os direitos reservados.</strong>
+    <div data-i18n="footerText">
+      Luminera manteve acesa a chama do Lightbearer. Parabéns novamente a todos os guardiões da luz.
+    </div>
+    <strong>Blackout Guild | Todos os direitos reservados.</strong>
   </div>
 
 </div>
@@ -595,51 +633,113 @@
       heroSubtitle: "Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.",
       heroLine1: "Your world managed to keep all ten lightbearer basins burning!",
       heroLine2: "Agora é hora de colher as recompensas do esforço coletivo e aproveitar os bônus globais até 30 de novembro.",
-      heroBonusText: "Até o dia 30 de novembro, todo o servidor recebe: +10% experience, +3% life leech, +3% mana leech.",
+      heroBonusText: "Até o dia 30 de novembro, todo o servidor recebe: +10% experience, +3% life leech e +3% mana leech. Organize suas hunts e aproveite o melhor momento para upar.",
       luciusTitle: "Como pegar as recompensas",
       luciusIntro: "Para receber os prêmios do evento, você precisa falar com Lucius em Yalahar.",
       luciusStep1: "Vá até Yalahar e encontre o NPC Lucius.",
-      luciusStep2: "Fale com ele (hi) e diga 'lightbearer' para ser teleportado.",
-      luciusStep3: "No templo, vá até Kazordoon para acessar a sala de recompensas.",
-      luciusNote: "Dica: vá com o personagem que participou do evento.",
+      luciusStep2: "Fale com ele (hi) e diga \"lightbearer\" para ser teleportado para o templo.",
+      luciusStep3: "No templo, siga para Kazordoon para acessar a sala de recompensas e a estátua de Fafnar.",
+      luciusNote: "Não deixe para o último dia: organize seu tempo, passe em Yalahar e garanta tudo com calma.",
       bonusTitle: "Bônus globais em Luminera",
       bonusIntro: "Como recompensa pela vitória, todo o mundo de Luminera recebe:",
       bonusItem1: "+10% experience em todas as hunts.",
-      bonusItem2: "+3% life leech.",
-      bonusItem3: "+3% mana leech.",
-      bonusOutro: "Aproveite para upar e organizar times.",
+      bonusItem2: "+3% life leech — mais sustain em combate.",
+      bonusItem3: "+3% mana leech — mais mana para spammar spells.",
+      bonusOutro: "Aproveite este período para fazer quests pendentes, desbloquear acessos e organizar grandes times de hunt.",
       rewardsTitle: "Recompensas do evento The Lightbearer",
-      rewardsBadge: "Disponíveis para quem participou",
-      group1Desc: "Ao acender pelo menos 1 basin, você recebe:",
-      g1Silver: "Troféu comemorativo pela participação.",
-      g1Midnight: "Fragmentos que podem ser trocados por XP ou gold.",
-      g1Brocade: "Mochila recheada de itens valiosos.",
+      rewardsBadge: "Disponíveis para quem participou do evento",
+      group1Desc: "Ao acender pelo menos 1 basin durante o evento, você recebe:",
+      g1Silver: "Troféu comemorativo pela sua participação em manter as chamas acesas.",
+      g1Midnight: "Fragmentos que podem ser trocados por experiência ou dinheiro.",
+      g1Brocade: "Mochila recheada com rings e diversos consumíveis.",
       group2Title: "Recompensas adicionais por acender todos os 10 basins",
-      group2Desc: "Recebe também:",
-      g2Golden: "Troféu dourado exclusivo.",
-      g2Celestial: "Tocha celestial especial.",
-      footerText: "Luminera manteve acesa a chama do Lightbearer."
+      group2Desc: "Se você fez parte da equipe que manteve todos os dez basins acesos, tem acesso a um conjunto ainda mais exclusivo:",
+      g2Golden: "A versão dourada do troféu, símbolo máximo de que você foi um verdadeiro guardião da luz.",
+      g2Celestial: "Há uma chance de receber uma Celestial Torch especial como lembrança permanente do Lightbearer (não é garantido).",
+      footerText: "Luminera manteve acesa a chama do Lightbearer. Parabéns novamente a todos os guardiões da luz."
+    },
+    en: {
+      heroHighlight: "✨ Event successfully completed",
+      heroTitle: "The Lightbearer — Victory on Luminera",
+      heroSubtitle: "Luminera kept the Lightbearer flame burning. Congratulations to all guardians of the light.",
+      heroLine1: "Your world managed to keep all ten lightbearer basins burning!",
+      heroLine2: "Now it's time to collect your rewards and take advantage of the global bonuses until November 30th.",
+      heroBonusText: "Until November 30th, the whole server receives: +10% experience, +3% life leech and +3% mana leech. Organise your hunts and make the most of this moment to level.",
+      luciusTitle: "How to claim your rewards",
+      luciusIntro: "To receive your rewards, you need to talk to Lucius in Yalahar.",
+      luciusStep1: "Go to Yalahar and find the NPC Lucius.",
+      luciusStep2: "Greet him (hi) and say \"lightbearer\" to be teleported to the temple.",
+      luciusStep3: "From the temple, go to Kazordoon to access the reward room and the Fafnar statue.",
+      luciusNote: "Don’t leave it for the last day: plan ahead, visit Yalahar and claim everything calmly.",
+      bonusTitle: "Global bonuses on Luminera",
+      bonusIntro: "As a reward for the victory, the entire world of Luminera receives:",
+      bonusItem1: "+10% experience on all hunts.",
+      bonusItem2: "+3% life leech — more sustain in combat.",
+      bonusItem3: "+3% mana leech — more mana to spam spells.",
+      bonusOutro: "Use this period to finish quests, unlock accesses and organise big team hunts.",
+      rewardsTitle: "The Lightbearer event rewards",
+      rewardsBadge: "Available for players who participated",
+      group1Desc: "By lighting at least 1 basin during the event, you receive:",
+      g1Silver: "A commemorative trophy for helping to keep the basins burning.",
+      g1Midnight: "Shards that can be traded for experience or money.",
+      g1Brocade: "A backpack filled with rings and various consumables.",
+      group2Title: "Additional rewards for lighting all 10 basins",
+      group2Desc: "If you helped to keep all ten basins burning, you unlock an even more exclusive set:",
+      g2Golden: "The golden version of the trophy, symbol of a true guardian of the light.",
+      g2Celestial: "There is a chance to receive a special Celestial Torch as a permanent memory of the Lightbearer event (not guaranteed).",
+      footerText: "Luminera kept the Lightbearer flame burning. Once again, congratulations to all guardians of the light."
+    },
+    es: {
+      heroHighlight: "✨ Evento completado con éxito",
+      heroTitle: "The Lightbearer — Victoria en Luminera",
+      heroSubtitle: "Luminera mantuvo encendida la llama del Lightbearer. Felicitaciones a todos los guardianes de la luz.",
+      heroLine1: "Your world managed to keep all ten lightbearer basins burning!",
+      heroLine2: "Ahora es momento de cobrar las recompensas y aprovechar los bonus globales hasta el 30 de noviembre.",
+      heroBonusText: "Hasta el 30 de noviembre, todo el servidor recibe: +10% experience, +3% life leech y +3% mana leech. Organiza tus hunts y aprovecha el mejor momento para subir de nivel.",
+      luciusTitle: "Cómo obtener las recompensas",
+      luciusIntro: "Para recibir los premios del evento, tienes que hablar con Lucius en Yalahar.",
+      luciusStep1: "Ve a Yalahar y encuentra al NPC Lucius.",
+      luciusStep2: "Habla con él (hi) y di \"lightbearer\" para ser teletransportado al templo.",
+      luciusStep3: "Desde el templo, ve a Kazordoon para entrar en la sala de recompensas y la estatua de Fafnar.",
+      luciusNote: "No lo dejes para el último día: organiza tu tiempo, pasa por Yalahar y reclama todo con tranquilidad.",
+      bonusTitle: "Bonus globales en Luminera",
+      bonusIntro: "Como recompensa por la victoria, todo el mundo de Luminera recibe:",
+      bonusItem1: "+10% experience en todas las hunts.",
+      bonusItem2: "+3% life leech — más sustain en combate.",
+      bonusItem3: "+3% mana leech — más mana para lanzar hechizos.",
+      bonusOutro: "Aprovecha este periodo para cerrar quests pendientes y organizar grandes equipos de hunt.",
+      rewardsTitle: "Recompensas del evento The Lightbearer",
+      rewardsBadge: "Disponibles para quienes participaron del evento",
+      group1Desc: "Al encender al menos 1 basin durante el evento, recibes:",
+      g1Silver: "Trofeo conmemorativo por ayudar a mantener las llamas encendidas.",
+      g1Midnight: "Fragmentos que pueden usarse para experiencia o dinero.",
+      g1Brocade: "Mochila llena de rings y consumibles.",
+      group2Title: "Recompensas adicionales por encender los 10 basins",
+      group2Desc: "Si ayudaste a mantener encendidos los diez basins, desbloqueas un set aún más exclusivo:",
+      g2Golden: "La versión dorada del trofeo, símbolo máximo de que fuiste un verdadero guardián de la luz.",
+      g2Celestial: "Hay posibilidad de recibir una Celestial Torch especial como recuerdo permanente del evento (no es garantizada).",
+      footerText: "Luminera mantuvo encendida la llama del Lightbearer. Felicitaciones nuevamente a todos los guardianes de la luz."
     }
   };
 
   function applyLanguage(lang) {
-    const t = translations[lang];
-    langSelector.style.backgroundImage =
-      `url("https://flagcdn.com/w20/${flagMap[lang]}.png")`;
+    const t = translations[lang] || translations.pt;
+    const flag = flagMap[lang] || "br";
+    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${flag}.png")`;
 
-    for (const el of document.querySelectorAll("[data-i18n]")) {
+    document.querySelectorAll("[data-i18n]").forEach(el => {
       const key = el.getAttribute("data-i18n");
       if (t[key]) el.textContent = t[key];
-    }
+    });
   }
 
-  const saved = localStorage.getItem("lang_light") || "pt";
-  langSelector.value = saved;
-  applyLanguage(saved);
+  const savedLang = localStorage.getItem("lightbearer_lang") || "pt";
+  langSelector.value = savedLang;
+  applyLanguage(savedLang);
 
   langSelector.addEventListener("change", () => {
     const lang = langSelector.value;
-    localStorage.setItem("lang_light", lang);
+    localStorage.setItem("lightbearer_lang", lang);
     applyLanguage(lang);
   });
 </script>
