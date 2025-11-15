@@ -1,667 +1,289 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>The Lightbearer | Luminera | Vitória</title>
-<link rel="icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-<link rel="shortcut icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3" type="image/x-icon">
-<link rel="apple-touch-icon" href="https://static.tibia.com/images/global/general/favicon.ico?v=3">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightbearer — Vitória Mundial | Blackout Guild</title>
 
 <style>
-  :root {
-    --bg: #0b1220;
-    --accent: #3b82f6;
-    --muted: #8fa1c2;
-    --card-bg: rgba(10,15,25,.9);
-    --border-soft: rgba(255,255,255,.08);
-    --gold: #facc15;
-    --success: #22c55e;
-    --danger: #ef4444;
-    --radius: 16px;
-  }
+/* ===================== */
+/*      BASE THEME       */
+/* ===================== */
 
-  * { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+  background: #050505 url("https://static.tibia.com/images/news/lightbearer_280.png") no-repeat center top fixed;
+  background-size: cover;
+  color: #e5e5e5;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 120px;
+}
 
-  body {
-    margin: 0;
-    font-family: "Inter", system-ui, sans-serif;
-    background:
-      var(--bg)
-      url('https://static.tibia.com/images/news/lightbearer_280.png')
-      no-repeat center top;
-    background-size: cover;
-    background-attachment: fixed;
-    color: #e5ecff;
-    min-height: 100vh;
-    position: relative;
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  pointer-events: none;
+  z-index: 0;
+}
 
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:linear-gradient(
-      rgba(0,0,0,.75),
-      rgba(0,0,0,.9)
-    );
-    pointer-events:none;
-    z-index:0;
-  }
+.wrap {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 16px 60px;
+}
 
-  .wrap{
-    position:relative;
-    z-index:1;
-    max-width:1100px;
-    margin:0 auto;
-    padding:60px 16px 40px;
-  }
+.card {
+  background: rgba(10,10,18,0.75);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 32px;
+  margin-top: 30px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+}
 
-  h1{
-    font-size:28px;
-    margin:0 0 10px;
-    font-weight:800;
-    text-align:center;
-  }
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
 
-  .subtitle{
-    text-align:center;
-    color:var(--muted);
-    font-size:15px;
-    margin-bottom:30px;
-  }
+.title-main {
+  font-size: 34px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 20px;
+}
 
-  .card{
-    background:var(--card-bg);
-    border:1px solid var(--border-soft);
-    border-radius:var(--radius);
-    padding:24px;
-    box-shadow:0 4px 25px rgba(0,0,0,.35);
-    margin-bottom:24px;
-  }
+.subtitle {
+  font-size: 18px;
+  text-align: center;
+  color: #ccc;
+  margin-bottom: 35px;
+}
 
-  .card-header{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    margin-bottom:12px;
-  }
+.badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #d4ffb0;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
 
-  .card-header img.npc{
-    width:64px;
-    height:64px;
-    image-rendering:pixelated;
-  }
+.section-title {
+  font-size: 22px;
+  margin-bottom: 14px;
+  color: #fff;
+}
 
-  .card-title{
-    font-size:18px;
-    font-weight:700;
-  }
+.reward-list ul {
+  margin: 0;
+  padding-left: 22px;
+}
 
-  .pill{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    border-radius:999px;
-    padding:4px 10px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:.02em;
-  }
+.reward-list li {
+  margin: 6px 0;
+  line-height: 1.5;
+  font-size: 16px;
+}
 
-  .pill-success{
-    background:rgba(34,197,94,.12);
-    border:1px solid rgba(34,197,94,.5);
-    color:#bbf7d0;
-  }
+.footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px 0 40px;
+  color: #888;
+  font-size: 14px;
+}
 
-  .pill-gold{
-    background:rgba(250,204,21,.12);
-    border:1px solid rgba(250,204,21,.5);
-    color:#fef9c3;
-  }
+/* NPC BOX */
+.npc-box {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: rgba(255,255,255,0.06);
+  padding: 16px;
+  border-radius: 14px;
+  margin: 20px 0;
+}
 
-  .pill-danger{
-    background:rgba(239,68,68,.12);
-    border:1px solid rgba(239,68,68,.5);
-    color:#fecaca;
-  }
+.npc-box img {
+  width: 64px;
+  height: 64px;
+}
 
-  .spirit-row{
-    display:flex;
-    justify-content:center;
-    gap:24px;
-    margin:12px 0 4px;
-  }
+/* SPIRIT DECOR */
+.spirit-row {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin: 20px 0 30px;
+}
 
-  .spirit-row img{
-    width:40px;
-    height:40px;
-    image-rendering:pixelated;
-    opacity:.9;
-  }
+.spirit-row img {
+  width: 54px;
+  height: 54px;
+  opacity: 0.85;
+}
 
-  .victory-text{
-    font-size:15px;
-    line-height:1.6;
-    margin:8px 0 0;
-  }
-
-  .highlight{
-    color:var(--gold);
-    font-weight:600;
-  }
-
-  .layout-two-col{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-    gap:20px;
-  }
-
-  @media (max-width:768px){
-    .layout-two-col{
-      grid-template-columns:1fr;
-    }
-  }
-
-  h3{
-    margin:0 0 10px;
-    font-size:16px;
-  }
-
-  .buff-list,
-  .howto-list,
-  .reward-list{
-    margin:0;
-    padding-left:22px;
-    font-size:14px;
-    line-height:1.7;
-  }
-
-  .buff-list li + li,
-  .howto-list li + li,
-  .reward-list li + li{
-    margin-top:4px;
-  }
-
-  .reward-box{
-    background:rgba(15,23,42,.85);
-    border-radius:12px;
-    border:1px solid rgba(148,163,184,.35);
-    padding:14px 16px;
-  }
-
-  .reward-caption{
-    font-size:12px;
-    color:var(--muted);
-    margin-bottom:6px;
-  }
-
-  .reward-line-strong{
-    font-weight:600;
-  }
-
-  .footer{
-    margin-top:32px;
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
-    border-top:1px solid rgba(255,255,255,.12);
-    padding-top:18px;
-  }
-
-  .footer img{
-    width:120px;
-    opacity:.8;
-    image-rendering:pixelated;
-    margin-top:14px;
-  }
-
-  /* ÍCONES GENÉRICOS PARA AS RECOMPENSAS
-     -------------------------------------------------
-     Troque as URLs abaixo pelos ícones corretos do TibiaWiki,
-     ex.: background-image:url('https://www.tibiawiki.com.br/images/.../Midnight_Shard.gif')
-  */
-  .reward-icon{
-    display:inline-block;
-    width:20px;
-    height:20px;
-    margin-right:6px;
-    vertical-align:middle;
-    background-size:contain;
-    background-repeat:no-repeat;
-    image-rendering:pixelated;
-  }
-
-  .icon-midnight-shard    { /* background-image:url('...'); */ }
-  .icon-silver-fafnar     { /* background-image:url('...'); */ }
-  .icon-brocade-backpack  { /* background-image:url('...'); */ }
-  .icon-death-ring        { /* background-image:url('...'); */ }
-  .icon-ring-healing      { /* background-image:url('...'); */ }
-  .icon-christmas-token   { /* background-image:url('...'); */ }
-  .icon-gold-ingot        { /* background-image:url('...'); */ }
-  .icon-giant-pearl       { /* background-image:url('...'); */ }
-  .icon-small-topaz       { /* background-image:url('...'); */ }
-  .icon-time-ring         { /* background-image:url('...'); */ }
-  .icon-stealth-ring      { /* background-image:url('...'); */ }
-
-  .icon-moon-backpack     { /* background-image:url('...'); */ }
-  .icon-deed-ownership    { /* background-image:url('...'); */ }
-  .icon-golden-fafnar     { /* background-image:url('...'); */ }
-  .icon-celestial-torch   { /* background-image:url('...'); */ }
-  .icon-crown-backpack    { /* background-image:url('...'); */ }
-  .icon-demonic-essence   { /* background-image:url('...'); */ }
-  .icon-violet-gem        { /* background-image:url('...'); */ }
-  .icon-small-diamond     { /* background-image:url('...'); */ }
-
-  /* ADDON: seletor de idioma + server save
-     (mesmo estilo que você já estava usando)
-  */
-  .top-controls {
-    position: fixed;
-    top: 14px;
-    right: 18px;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .lang-select {
-    background: rgba(15,23,42,0.9);
-    border: 1px solid rgba(148,163,184,0.6);
-    border-radius: 6px;
-    color: #fff;
-    font-size: 13px;
-    padding: 5px 26px 5px 30px;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    font-weight: 500;
-    background-image: url("https://flagcdn.com/w20/br.png");
-    background-repeat: no-repeat;
-    background-size: 18px auto;
-    background-position: 8px center;
-    transition: background-image 0.2s ease;
-  }
-
-  .lang-select option { color: #000; }
-
-  .ss-badge {
-    background: rgba(15,23,42,0.9);
-    border: 1px solid rgba(148,163,184,0.6);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #f87171;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    line-height: 1;
-  }
-
-  .ss-badge img {
-    width: 14px;
-    height: 14px;
-    vertical-align: middle;
-  }
-
-  @media (max-width: 600px) {
-    .top-controls {
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      justify-content: center;
-      gap: 8px;
-    }
-  }
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .card { padding: 22px; }
+  .title-main { font-size: 26px; }
+  .section-title { font-size: 20px; }
+  .npc-box img { width: 54px; height: 54px; }
+}
 </style>
+
 </head>
-
 <body>
+
 <div class="wrap">
-  <h1 id="headline">The Lightbearer | Luminera | Vitória</h1>
-  <div class="subtitle" id="subtitle">
-    Seu mundo manteve todos os dez basins acesos. Agora é hora de colher as recompensas.
+
+<!-- ====================================== -->
+<!--        CABEÇALHO DA VITÓRIA           -->
+<!-- ====================================== -->
+
+<div class="card">
+  <span class="badge">Vitória do servidor</span>
+
+  <h1 class="title-main">Todos os dez Lightbearer basins permaneceram acesos!</h1>
+
+  <div class="spirit-row">
+    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
+    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
+    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
   </div>
 
-  <!-- CARD: MENSAGEM DE VITÓRIA + BUFF GLOBAL -->
-  <div class="card" id="victory-card">
-    <div class="card-header">
-      <div>
-        <div class="pill pill-success" id="victory-pill">Vitória do servidor</div>
-        <div class="card-title" id="victory-title">
-          Todos os dez Lightbearer basins permaneceram acesos!
-        </div>
-      </div>
-    </div>
+  <p style="font-size:19px; line-height:1.6;">
+    <strong style="color:#ffe177;">Your world managed to keep all ten lightbearer basins burning!</strong><br>
+    Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.
+  </p>
 
-    <div class="spirit-row">
-      <!-- Troque a URL da imagem se quiser outro Spirit of Light -->
-      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
-      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
-      <img src="https://www.tibiawiki.com.br/images/3/3e/Spirit_of_Light.gif" alt="Spirit of Light">
-    </div>
+  <br>
 
-    <p class="victory-text" id="victory-text">
-      <span class="highlight">Your world managed to keep all ten lightbearer basins burning!</span>
-      Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.
+  <span class="badge" style="background:#292910; border-color:#5a5a23; color:#fff2a9;">
+    Bônus globais até 30 de novembro
+  </span>
+
+  <ul style="font-size:17px; line-height:1.7; margin-bottom:10px;">
+    <li><strong>+10%</strong> de experiência obtida</li>
+    <li><strong>+3%</strong> de life leech</li>
+    <li><strong>+3%</strong> de mana leech</li>
+    <li>Experiência compartilhada ainda mais forte para hunts em equipe</li>
+  </ul>
+
+  <br><br>
+
+  <h2 class="section-title">Como pegar suas recompensas</h2>
+
+  <div class="npc-box">
+    <img src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif" alt="Lucius">
+    <p style="margin:0; font-size:16px; line-height:1.5;">
+      Vá até <strong>Lucius</strong> em <strong>Yalahar</strong> e apenas <strong>diga “hi” e depois “reward”</strong>.
+      Ele irá teleportar você diretamente para o templo. Depois disso, siga para <strong>Kazordoon</strong> para acessar
+      a <strong>Sala de Recompensas</strong> e visitar a <strong>estátua de Fafnar</strong>.
     </p>
-
-    <div style="margin-top:18px;" class="layout-two-col">
-      <div>
-        <div class="pill pill-gold" style="margin-bottom:6px;" id="buff-pill">
-          Bônus globais até 30 de novembro
-        </div>
-        <ul class="buff-list" id="buff-list">
-          <li><strong>+10%</strong> de experiência obtida.</li>
-          <li><strong>+3%</strong> de life leech.</li>
-          <li><strong>+3%</strong> de mana leech.</li>
-          <li>Experiência compartilhada ainda mais forte para hunts em equipe.</li>
-        </ul>
-      </div>
-      <div>
-        <div class="pill pill-danger" style="margin-bottom:6px;" id="tip-pill">
-          Aproveite enquanto dura
-        </div>
-        <p class="victory-text" id="buff-text">
-          Esse tipo de bônus não aparece sempre. Organize suas hunts, chame o time da guild,
-          limpe seus task logs e use esses dias para adiantar tudo o que você vinha adiando.
-        </p>
-      </div>
-    </div>
   </div>
 
-  <!-- CARD: LUCIOUS / INSTRUÇÕES -->
-  <div class="card" id="lucius-card">
-    <div class="card-header">
-      <img class="npc" src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif" alt="Lucius">
-      <div>
-        <div class="card-title" id="lucius-title">Como receber suas recompensas</div>
-        <div class="reward-caption" id="lucius-caption">
-          As recompensas variam conforme quantos basins você acendeu durante o evento.
-        </div>
-      </div>
-    </div>
-
-    <ul class="howto-list" id="lucius-list">
-      <li>Vá até <strong>Yalahar</strong> e fale com <strong>Lucius</strong> no templo.</li>
-      <li>Use palavras-chave como <em>lightbearer</em>, <em>reward</em> ou siga o diálogo padrão do NPC.</li>
-      <li>Ao concluir a conversa, você será teleportado para o <strong>temple</strong> e poderá seguir para <strong>Kazordoon</strong>.</li>
-      <li>Em Kazordoon, procure a <strong>sala de recompensas</strong> e a <strong>estátua de Fafnar</strong> para reclamar seus prêmios.</li>
-      <li>Lembre-se: alguns prêmios, como a <strong>Moon Backpack</strong>, só podem ser obtidos na primeira participação bem-sucedida.</li>
-    </ul>
-  </div>
-
-  <!-- CARD: RECOMPENSAS -->
-  <div class="card" id="rewards-card">
-    <div class="card-header">
-      <div>
-        <div class="pill pill-gold" id="rewards-pill">Recompensas do Lightbearer</div>
-        <div class="card-title" id="rewards-title">
-          O que você recebe pelos basins acesos
-        </div>
-      </div>
-    </div>
-
-    <div class="layout-two-col">
-      <!-- 1 a 9 basins -->
-      <div class="reward-box">
-        <h3 id="partial-title">Para quem acendeu de 1 a 9 basins</h3>
-        <p class="reward-caption" id="partial-caption">
-          Se pelo menos um basin foi aceso pelo seu personagem, você recebe:
-        </p>
-        <ul class="reward-list" id="partial-list">
-          <li>
-            <span class="reward-icon icon-midnight-shard"></span>
-            <span class="reward-line-strong">20x Midnight Shards</span>
-          </li>
-          <li>
-            <span class="reward-icon icon-silver-fafnar"></span>
-            1x Silver Fafnar Trophy
-          </li>
-          <li>
-            <span class="reward-icon icon-brocade-backpack"></span>
-            1x Brocade Backpack contendo:
-            <ul class="reward-list">
-              <li><span class="reward-icon icon-death-ring"></span>1x Death Ring</li>
-              <li><span class="reward-icon icon-ring-healing"></span>1x Ring of Healing</li>
-              <li><span class="reward-icon icon-christmas-token"></span>50x Christmas Tokens</li>
-              <li><span class="reward-icon icon-gold-ingot"></span>2x Gold Ingots</li>
-              <li><span class="reward-icon icon-giant-pearl"></span>1x Giant Shimmering Pearl</li>
-              <li><span class="reward-icon icon-small-topaz"></span>30x Small Topazes</li>
-              <li><span class="reward-icon icon-time-ring"></span>1x Time Ring</li>
-              <li><span class="reward-icon icon-stealth-ring"></span>1x Stealth Ring</li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Todos os 10 basins -->
-      <div class="reward-box">
-        <h3 id="all-title">Para quem acendeu todos os 10 basins</h3>
-        <p class="reward-caption" id="all-caption">
-          Além de tudo o que foi listado ao lado, você ainda recebe:
-        </p>
-        <ul class="reward-list" id="all-list">
-          <li>
-            <span class="reward-icon icon-moon-backpack"></span>
-            1x Moon Backpack <span class="reward-caption">(somente na primeira participação)</span>
-          </li>
-          <li>
-            <span class="reward-icon icon-deed-ownership"></span>
-            1x Deed of Ownership
-          </li>
-          <li>
-            <span class="reward-icon icon-brocade-backpack"></span>
-            1x Brocade Backpack contendo:
-            <ul class="reward-list">
-              <li><span class="reward-icon icon-midnight-shard"></span>10x Midnight Shards</li>
-              <li><span class="reward-icon icon-golden-fafnar"></span>1x Golden Fafnar Trophy</li>
-              <li><span class="reward-icon icon-celestial-torch"></span>1x Celestial Torch <span class="reward-caption">(chance rara)</span></li>
-            </ul>
-          </li>
-          <li>
-            <span class="reward-icon icon-crown-backpack"></span>
-            1x Crown Backpack contendo:
-            <ul class="reward-list">
-              <li><span class="reward-icon icon-ring-healing"></span>2x Ring of Healings</li>
-              <li><span class="reward-icon"></span>1x Might Ring</li>
-              <li><span class="reward-icon icon-gold-ingot"></span>4x Gold Ingots</li>
-              <li><span class="reward-icon icon-demonic-essence"></span>50x Demonic Essences</li>
-              <li><span class="reward-icon icon-violet-gem"></span>1x Violet Gem</li>
-              <li><span class="reward-icon icon-small-diamond"></span>40x Small Diamonds</li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <span id="footer-text">
-      Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
-    </span>
-    <br>
-    <img src="https://static.tibia.com/images/news/lightbearer_280.png" alt="Lightbearer Icon">
-  </div>
 </div>
 
-<!-- ====== ADDON: Idioma + Server Save ====== -->
-<div class="top-controls">
-  <select id="langSelector" class="lang-select">
-    <option value="pt" selected>Português</option>
-    <option value="en">English</option>
-    <option value="es">Español (MX)</option>
-  </select>
 
-  <div id="ssBadge" class="ss-badge">
-    <img src="https://cdn-icons-png.flaticon.com/512/2099/2099153.png" alt="ampulheta">
-    <span id="ssText">SS+0 (calculando...)</span>
+
+<!-- ====================================== -->
+<!--      LISTA COMPLETA DE RECOMPENSAS     -->
+<!-- ====================================== -->
+
+<div class="card">
+  <span class="badge">Recompensas do Lightbearer</span>
+
+  <h2 class="section-title">O que você recebe pelos basins acesos</h2>
+
+  <div style="display:flex; gap:40px; flex-wrap:wrap;">
+
+    <!-- 1–9 BASINS -->
+    <div class="reward-list" style="flex:1; min-width:300px;">
+      <h3 style="color:#fff;">Para quem acendeu de 1 a 9 basins</h3>
+
+      <p style="color:#ccc; margin-top:4px;">Se pelo menos um basin foi aceso pelo seu personagem, você recebe:</p>
+
+      <ul>
+        <li>20× Midnight Shards <img src="https://www.tibiawiki.com.br/images/c/c5/Midnight_Shard.gif"></li>
+        <li>1× Silver Fafnar Trophy <img src="https://www.tibiawiki.com.br/images/5/55/Silver_Fafnar_Trophy.gif"></li>
+
+        <li>1× Brocade Backpack <img src="https://www.tibiawiki.com.br/images/9/95/Brocade_Backpack.gif"> contendo:
+          <ul>
+            <li>1× Death Ring <img src="https://www.tibiawiki.com.br/images/6/6c/Death_Ring.gif"></li>
+            <li>1× Ring of Healing <img src="https://www.tibiawiki.com.br/images/d/d4/Ring_of_Healing.gif"></li>
+            <li>50× Christmas Tokens <img src="https://www.tibiawiki.com.br/images/6/6f/Christmas_Token.gif"></li>
+            <li>2× Gold Ingots <img src="https://www.tibiawiki.com.br/images/f/f8/Gold_Ingot.gif"></li>
+            <li>1× Giant Shimmering Pearl <img src="https://www.tibiawiki.com.br/images/3/3c/Giant_Shimmering_Pearl.gif"></li>
+            <li>30× Small Topazes <img src="https://www.tibiawiki.com.br/images/8/83/Small_Topaz.gif"></li>
+            <li>1× Time Ring <img src="https://www.tibiawiki.com.br/images/3/38/Time_Ring.gif"></li>
+            <li>1× Stealth Ring <img src="https://www.tibiawiki.com.br/images/7/79/Stealth_Ring.gif"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 10 BASINS -->
+    <div class="reward-list" style="flex:1; min-width:300px;">
+      <h3 style="color:#fff;">Para quem acendeu todos os 10 basins</h3>
+
+      <p style="color:#ccc; margin-top:4px;">Além de tudo o que foi listado ao lado, você ainda recebe:</p>
+
+      <ul>
+        <li>1× Moon Backpack <img src="https://www.tibiawiki.com.br/images/9/97/Moon_Backpack.gif"></li>
+        <li>1× Deed of Ownership <img src="https://www.tibiawiki.com.br/images/d/d7/Deed_of_Ownership.gif"></li>
+
+        <li>1× Brocade Backpack <img src="https://www.tibiawiki.com.br/images/9/95/Brocade_Backpack.gif"> contendo:
+          <ul>
+            <li>10× Midnight Shards <img src="https://www.tibiawiki.com.br/images/c/c5/Midnight_Shard.gif"></li>
+            <li>1× Golden Fafnar Trophy <img src="https://www.tibiawiki.com.br/images/0/0e/Golden_Fafnar_Trophy.gif"></li>
+            <li>1× Celestial Torch <img src="https://www.tibiawiki.com.br/images/0/08/Celestial_Torch.gif"></li>
+          </ul>
+        </li>
+
+        <li>1× Crown Backpack <img src="https://www.tibiawiki.com.br/images/a/a5/Crown_Backpack.gif"> contendo:
+          <ul>
+            <li>2× Ring of Healings <img src="https://www.tibiawiki.com.br/images/d/d4/Ring_of_Healing.gif"></li>
+            <li>1× Might Ring <img src="https://www.tibiawiki.com.br/images/6/63/Might_Ring.gif"></li>
+            <li>4× Gold Ingots <img src="https://www.tibiawiki.com.br/images/f/f8/Gold_Ingot.gif"></li>
+            <li>50× Demonic Essences <img src="https://www.tibiawiki.com.br/images/0/00/Demonic_Essence.gif"></li>
+            <li>1× Violet Gem <img src="https://www.tibiawiki.com.br/images/5/55/Violet_Gem.gif"></li>
+            <li>40× Small Diamonds <img src="https://www.tibiawiki.com.br/images/b/b7/Small_Diamond.gif"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
   </div>
+
+  <br>
+
+  <p style="text-align:center; margin-top:30px; font-size:16px; color:#8a8a8a;">
+    Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
+  </p>
 </div>
 
-<script>
-  // ----- Idiomas -----
-  const langSelector = document.getElementById("langSelector");
-  const flagMap = { pt: "br", en: "us", es: "mx" };
 
-  const translations = {
-    pt: {
-      headline: "The Lightbearer | Luminera | Vitória",
-      subtitle: "Seu mundo manteve todos os dez basins acesos. Agora é hora de colher as recompensas.",
-      victoryPill: "Vitória do servidor",
-      victoryTitle: "Todos os dez Lightbearer basins permaneceram acesos!",
-      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.",
-      buffPill: "Bônus globais até 30 de novembro",
-      buffList: `
-        <li><strong>+10%</strong> de experiência obtida.</li>
-        <li><strong>+3%</strong> de life leech.</li>
-        <li><strong>+3%</strong> de mana leech.</li>
-        <li>Experiência compartilhada ainda mais forte para hunts em equipe.</li>
-      `,
-      tipPill: "Aproveite enquanto dura",
-      buffText: "Esse tipo de bônus não aparece sempre. Organize suas hunts, chame o time da guild, limpe seus task logs e use esses dias para adiantar tudo o que você vinha adiando.",
-      luciusTitle: "Como receber suas recompensas",
-      luciusCaption: "As recompensas variam conforme quantos basins você acendeu durante o evento.",
-      luciusList: `
-        <li>Vá até <strong>Yalahar</strong> e fale com <strong>Lucius</strong> no templo.</li>
-        <li>Use palavras-chave como <em>lightbearer</em>, <em>reward</em> ou siga o diálogo padrão do NPC.</li>
-        <li>Ao concluir a conversa, você será teleportado para o <strong>temple</strong> e poderá seguir para <strong>Kazordoon</strong>.</li>
-        <li>Em Kazordoon, procure a <strong>sala de recompensas</strong> e a <strong>estátua de Fafnar</strong> para reclamar seus prêmios.</li>
-        <li>Lembre-se: alguns prêmios, como a <strong>Moon Backpack</strong>, só podem ser obtidos na primeira participação bem-sucedida.</li>
-      `,
-      rewardsPill: "Recompensas do Lightbearer",
-      rewardsTitle: "O que você recebe pelos basins acesos",
-      partialTitle: "Para quem acendeu de 1 a 9 basins",
-      partialCaption: "Se pelo menos um basin foi aceso pelo seu personagem, você recebe:",
-      allTitle: "Para quem acendeu todos os 10 basins",
-      allCaption: "Além de tudo o que foi listado ao lado, você ainda recebe:",
-      footerText: "Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz."
-    },
-    en: {
-      headline: "The Lightbearer | Luminera | Victory",
-      subtitle: "Your world kept all ten basins burning. Time to claim your rewards.",
-      victoryPill: "World victory",
-      victoryTitle: "All ten Lightbearer basins remained lit!",
-      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Enjoy the increased shared experience and global bonuses while the event lasts.",
-      buffPill: "Global bonuses until November 30th",
-      buffList: `
-        <li><strong>+10%</strong> experience gain.</li>
-        <li><strong>+3%</strong> life leech.</li>
-        <li><strong>+3%</strong> mana leech.</li>
-        <li>Shared experience buffed for team hunts.</li>
-      `,
-      tipPill: "Make it count",
-      buffText: "This kind of bonus is rare. Schedule your hunts, bring your guild, clear your task log and use these days to push everything forward.",
-      luciusTitle: "How to claim your rewards",
-      luciusCaption: "Your rewards depend on how many basins you lit during the event.",
-      luciusList: `
-        <li>Travel to <strong>Yalahar</strong> and talk to <strong>Lucius</strong> in the temple.</li>
-        <li>Use keywords like <em>lightbearer</em> or <em>reward</em> or follow his standard dialogue.</li>
-        <li>After the dialogue, you will be teleported to the <strong>temple</strong> and can then head to <strong>Kazordoon</strong>.</li>
-        <li>In Kazordoon, look for the <strong>reward room</strong> and <strong>Fafnar's statue</strong> to receive your prizes.</li>
-        <li>Remember: some items, like the <strong>Moon Backpack</strong>, can only be obtained on your first successful participation.</li>
-      `,
-      rewardsPill: "Lightbearer rewards",
-      rewardsTitle: "What you receive for keeping the basins lit",
-      partialTitle: "If you lit between 1 and 9 basins",
-      partialCaption: "If your character lit at least one basin, you receive:",
-      allTitle: "If you lit all 10 basins",
-      allCaption: "On top of everything listed on the left, you also receive:",
-      footerText: "Luminera kept the Lightbearer flame alive. Congratulations to all guardians of the light."
-    },
-    es: {
-      headline: "The Lightbearer | Luminera | Victoria",
-      subtitle: "Tu mundo mantuvo encendidos los diez basins. Ahora toca cobrar las recompensas.",
-      victoryPill: "Victoria del servidor",
-      victoryTitle: "¡Los diez basins del Lightbearer permanecieron encendidos!",
-      victoryText: "<span class='highlight'>Your world managed to keep all ten lightbearer basins burning!</span> Aprovechen la experiencia compartida aumentada y los bonus mientras dure el evento.",
-      buffPill: "Bonus globales hasta el 30 de noviembre",
-      buffList: `
-        <li><strong>+10%</strong> de experiencia ganada.</li>
-        <li><strong>+3%</strong> de life leech.</li>
-        <li><strong>+3%</strong> de mana leech.</li>
-        <li>Experiencia compartida todavía más fuerte para las hunts en equipo.</li>
-      `,
-      tipPill: "Aprovecha al máximo",
-      buffText: "Este tipo de bonus es raro. Organiza tus hunts, llama a tu guild y usa estos días para adelantar todo lo que venías posponiendo.",
-      luciusTitle: "Cómo recibir tus recompensas",
-      luciusCaption: "Las recompensas dependen de cuántos basins encendiste durante el evento.",
-      luciusList: `
-        <li>Ve a <strong>Yalahar</strong> y habla con <strong>Lucius</strong> en el templo.</li>
-        <li>Usa palabras clave como <em>lightbearer</em> o <em>reward</em> o sigue el diálogo normal del NPC.</li>
-        <li>Al terminar la conversación, serás enviado al <strong>temple</strong> y luego podrás ir a <strong>Kazordoon</strong>.</li>
-        <li>En Kazordoon, busca la <strong>sala de recompensas</strong> y la <strong>estatua de Fafnar</strong> para reclamar tus premios.</li>
-        <li>Recuerda: algunos ítems, como la <strong>Moon Backpack</strong>, solo se pueden obtener en la primera participación exitosa.</li>
-      `,
-      rewardsPill: "Recompensas del Lightbearer",
-      rewardsTitle: "Lo que recibes por mantener los basins encendidos",
-      partialTitle: "Si encendiste entre 1 y 9 basins",
-      partialCaption: "Si tu personaje encendió al menos un basin, recibes:",
-      allTitle: "Si encendiste los 10 basins",
-      allCaption: "Además de todo lo listado al lado, también recibes:",
-      footerText: "Luminera mantuvo viva la llama del Lightbearer. Felicitaciones a todos los guardianes de la luz."
-    }
-  };
+<!-- ====================================== -->
+<!--               RODAPÉ                   -->
+<!-- ====================================== -->
 
-  function applyTranslations(lang){
-    const t = translations[lang] || translations.pt;
-    document.getElementById("headline").textContent   = t.headline;
-    document.getElementById("subtitle").textContent   = t.subtitle;
-    document.getElementById("victory-pill").textContent = t.victoryPill;
-    document.getElementById("victory-title").textContent = t.victoryTitle;
-    document.getElementById("victory-text").innerHTML = t.victoryText;
-    document.getElementById("buff-pill").textContent  = t.buffPill;
-    document.getElementById("buff-list").innerHTML    = t.buffList;
-    document.getElementById("tip-pill").textContent   = t.tipPill;
-    document.getElementById("buff-text").textContent  = t.buffText;
-    document.getElementById("lucius-title").textContent = t.luciusTitle;
-    document.getElementById("lucius-caption").textContent = t.luciusCaption;
-    document.getElementById("lucius-list").innerHTML  = t.luciusList;
-    document.getElementById("rewards-pill").textContent = t.rewardsPill;
-    document.getElementById("rewards-title").textContent = t.rewardsTitle;
-    document.getElementById("partial-title").textContent = t.partialTitle;
-    document.getElementById("partial-caption").textContent = t.partialCaption;
-    document.getElementById("all-title").textContent   = t.allTitle;
-    document.getElementById("all-caption").textContent = t.allCaption;
-    document.getElementById("footer-text").textContent = t.footerText;
-  }
+<div class="footer">
+  Blackout Guild | Todos os direitos reservados.
+</div>
 
-  function updateFlag(){
-    const lang = langSelector.value;
-    const code = flagMap[lang] || "br";
-    langSelector.style.backgroundImage = `url("https://flagcdn.com/w20/${code}.png")`;
-    localStorage.setItem("langLightbearerVictory", lang);
-    applyTranslations(lang);
-  }
-
-  const savedLang = localStorage.getItem("langLightbearerVictory") || "pt";
-  langSelector.value = savedLang;
-  updateFlag();
-  langSelector.addEventListener("change", updateFlag);
-
-  // ----- Server Save badge -----
-  function updateServerSave() {
-    const tzSP = "America/Sao_Paulo";
-    const nowSP = new Date(new Date().toLocaleString("en-US", { timeZone: tzSP }));
-    const ss = new Date(nowSP);
-    ss.setHours(6, 0, 0, 0);
-    if (nowSP < ss) ss.setDate(ss.getDate() - 1);
-
-    const diffHours = (nowSP - ss) / 3600000;
-    const hours = Math.floor(diffHours);
-    const minutes = Math.floor((diffHours - hours) * 60);
-    const remaining = 60 - minutes;
-    document.getElementById("ssText").textContent = `SS+${hours} (${remaining}m restantes)`;
-  }
-
-  updateServerSave();
-  setInterval(updateServerSave, 60000);
-</script>
+</div>
 
 </body>
 </html>
