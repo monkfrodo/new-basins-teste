@@ -1,289 +1,859 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lightbearer — Vitória Mundial | Blackout Guild</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Lightbearer Victory | Luminera</title>
 
-<style>
-/* ===================== */
-/*      BASE THEME       */
-/* ===================== */
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.95);
+      --bg-card-soft: rgba(15,23,42,0.9);
+      --accent: #facc15;
+      --accent-soft: rgba(250,204,21,0.16);
+      --accent-red: #f97373;
+      --accent-red-soft: rgba(248,113,113,0.12);
+      --text-main: #e5ecff;
+      --text-muted: #94a3b8;
+      --pill-bg: rgba(15,23,42,0.9);
+      --radius-card: 22px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 60px rgba(0,0,0,0.65);
+      --border-subtle: rgba(148,163,184,0.15);
+      --border-strong: rgba(148,163,184,0.35);
+      --badge-green: #22c55e;
+      --badge-yellow: #facc15;
+      --badge-red: #f97373;
+      --font-main: system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",sans-serif;
+    }
 
-body {
-  margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
-  background: #050505 url("https://static.tibia.com/images/news/lightbearer_280.png") no-repeat center top fixed;
-  background-size: cover;
-  color: #e5e5e5;
-  position: relative;
-  min-height: 100vh;
-  padding-bottom: 120px;
-}
+    * { box-sizing: border-box; }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  pointer-events: none;
-  z-index: 0;
-}
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      color: var(--text-main);
+      background:
+        radial-gradient(circle at top, rgba(250,204,21,0.12), transparent 55%),
+        radial-gradient(circle at bottom, rgba(15,23,42,0.95), #020617);
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-.wrap {
-  position: relative;
-  z-index: 2;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 16px 60px;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(2,6,23,0.93), rgba(2,6,23,0.96) 30%, rgba(2,6,23,0.97) 70%, rgba(2,6,23,0.98)),
+        url("https://static.tibia.com/images/news/lightbearer_280.png") center top / cover no-repeat;
+      z-index: -1;
+    }
 
-.card {
-  background: rgba(10,10,18,0.75);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 22px;
-  padding: 32px;
-  margin-top: 30px;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-}
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 16px 40px;
+    }
 
-h1, h2, h3 {
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
+    /* Top bar */
 
-.title-main {
-  font-size: 34px;
-  text-align: center;
-  color: #fff;
-  margin-bottom: 20px;
-}
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
 
-.subtitle {
-  font-size: 18px;
-  text-align: center;
-  color: #ccc;
-  margin-bottom: 35px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.badge {
-  display: inline-block;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.18);
-  color: #d4ffb0;
-  padding: 6px 16px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 18px;
-}
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 30% 20%, #facc15, #ea580c 55%, #1e293b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(248,250,252,0.08);
+      font-size: 18px;
+    }
 
-.section-title {
-  font-size: 22px;
-  margin-bottom: 14px;
-  color: #fff;
-}
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
 
-.reward-list ul {
-  margin: 0;
-  padding-left: 22px;
-}
+    .brand-title span:first-child {
+      font-weight: 700;
+      font-size: 18px;
+    }
 
-.reward-list li {
-  margin: 6px 0;
-  line-height: 1.5;
-  font-size: 16px;
-}
+    .brand-title span:last-child {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
 
-.footer {
-  text-align: center;
-  margin-top: 60px;
-  padding: 20px 0 40px;
-  color: #888;
-  font-size: 14px;
-}
+    .lang-switcher {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      gap: 3px;
+    }
 
-/* NPC BOX */
-.npc-box {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  background: rgba(255,255,255,0.06);
-  padding: 16px;
-  border-radius: 14px;
-  margin: 20px 0;
-}
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
 
-.npc-box img {
-  width: 64px;
-  height: 64px;
-}
+    .lang-btn span.flag {
+      font-size: 14px;
+    }
 
-/* SPIRIT DECOR */
-.spirit-row {
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-  margin: 20px 0 30px;
-}
+    .lang-btn.active {
+      background: rgba(15,23,42,1);
+      color: #e5ecff;
+      box-shadow: 0 0 0 1px rgba(148,163,184,0.5), 0 10px 25px rgba(0,0,0,0.6);
+    }
 
-.spirit-row img {
-  width: 54px;
-  height: 54px;
-  opacity: 0.85;
-}
+    /* Cards */
 
-/* RESPONSIVE */
-@media (max-width: 720px) {
-  .card { padding: 22px; }
-  .title-main { font-size: 26px; }
-  .section-title { font-size: 20px; }
-  .npc-box img { width: 54px; height: 54px; }
-}
-</style>
+    .card {
+      border-radius: var(--radius-card);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 24px 24px;
+    }
 
+    .card + .card {
+      margin-top: 22px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      padding: 5px 12px 6px;
+      font-size: 12px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(250,204,21,0.6);
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 2px rgba(250,204,21,0.25);
+    }
+
+    .pill-secondary {
+      background: var(--accent-red-soft);
+      color: var(--accent-red);
+      border-color: rgba(248,113,113,0.6);
+    }
+
+    .hero-text {
+      max-width: 860px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .loose-highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Spirit chips */
+
+    .spirit-row {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0 6px;
+      flex-wrap: wrap;
+    }
+
+    .spirit-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .spirit-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      background:
+        radial-gradient(circle at 25% 20%, #f9fafb, #e5e7eb 35%, #22c55e 55%, #0f172a);
+      box-shadow: 0 0 0 1px rgba(148,163,184,0.6);
+    }
+
+    /* Hero body */
+
+    .hero-body {
+      display: grid;
+      grid-template-columns: minmax(0,1.4fr) minmax(0,1fr);
+      gap: 26px;
+      margin-top: 12px;
+    }
+
+    .hero-body p {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .hero-body ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .hero-body li + li {
+      margin-top: 4px;
+    }
+
+    .badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: var(--radius-pill);
+      padding: 5px 10px 6px;
+      font-size: 12px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--border-strong);
+      margin-bottom: 10px;
+    }
+
+    .badge-tag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 2px rgba(250,204,21,0.25);
+    }
+
+    .cta-box {
+      padding: 14px 14px;
+      border-radius: 18px;
+      background: rgba(15,23,42,0.95);
+      border: 1px dashed rgba(148,163,184,0.6);
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
+    .cta-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .cta-box p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .cta-box strong {
+      color: #e5ecff;
+    }
+
+    /* Rewards section */
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    .rewards-column {
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .rewards-column h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .rewards-column .hint {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .reward-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .reward-list > li + li {
+      margin-top: 4px;
+    }
+
+    .reward-list .sub {
+      margin-top: 4px;
+      padding-left: 14px;
+      list-style: circle;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .reward-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: var(--radius-pill);
+      padding: 4px 9px 4px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.45);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .reward-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(135deg,#fbbf24,#eab308);
+      box-shadow: 0 0 0 2px rgba(250,204,21,0.18);
+    }
+
+    /* NPC section */
+
+    .npc-section {
+      display: grid;
+      grid-template-columns: auto minmax(0,1fr);
+      gap: 18px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .npc-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 30% 20%, #fef9c3, #fbbf24 35%, #b91c1c 65%, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.9);
+    }
+
+    .npc-avatar-inner {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 20%, #fefce8, #facc15 40%, #7f1d1d 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      color: #1f2937;
+      box-shadow: 0 0 0 2px rgba(248,250,252,0.65);
+    }
+
+    .npc-text h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+    }
+
+    .npc-text p {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .npc-steps {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    .npc-steps li + li {
+      margin-top: 3px;
+    }
+
+    .npc-keyword {
+      font-family: "SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;
+      font-size: 12px;
+      padding: 2px 6px 3px;
+      border-radius: 6px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.6);
+      margin: 0 3px;
+      white-space: nowrap;
+    }
+
+    /* Footer */
+
+    .footer {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer strong {
+      color: #e5ecff;
+      font-weight: 600;
+    }
+
+    .footer small {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(148,163,184,0.8);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .wrap {
+        padding-top: 20px;
+      }
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-title {
+        font-size: 20px;
+      }
+      .hero-body {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .rewards-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .npc-section {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .npc-avatar {
+        margin: 2px 0 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 18px 16px 20px;
+      }
+      .spirit-row {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="wrap">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">🔥</div>
+        <div class="brand-title">
+          <span>Lightbearer | Luminera</span>
+          <span data-i18n="brand-sub">Vitória do servidor</span>
+        </div>
+      </div>
 
-<div class="wrap">
+      <div class="lang-switcher" aria-label="Idioma / Language">
+        <button class="lang-btn active" data-lang="pt">
+          <span class="flag">🇧🇷</span><span>PT-BR</span>
+        </button>
+        <button class="lang-btn" data-lang="en">
+          <span class="flag">🇺🇸</span><span>EN</span>
+        </button>
+        <button class="lang-btn" data-lang="es">
+          <span class="flag">🇲🇽</span><span>ES</span>
+        </button>
+      </div>
+    </header>
 
-<!-- ====================================== -->
-<!--        CABEÇALHO DA VITÓRIA           -->
-<!-- ====================================== -->
+    <!-- HERO CARD -->
+    <section class="card">
+      <div class="card-header">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span data-i18n="hero-pill">Vitória do servidor</span>
+        </div>
+      </div>
 
-<div class="card">
-  <span class="badge">Vitória do servidor</span>
+      <div class="hero-text">
+        <h1 class="hero-title" data-i18n="hero-title">
+          Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
+        </h1>
+        <p class="hero-subtitle">
+          <span class="loose-highlight" data-i18n="hero-subtitle-1">
+            Your world managed to keep all ten lightbearer basins burning!
+          </span>
+          <span data-i18n="hero-subtitle-2">
+            Aproveitem a experiência compartilhada aumentada e os bônus globais enquanto durar o evento.
+          </span>
+        </p>
+      </div>
 
-  <h1 class="title-main">Todos os dez Lightbearer basins permaneceram acesos!</h1>
+      <div class="spirit-row" aria-hidden="true">
+        <div class="spirit-chip">
+          <div class="spirit-icon"></div>
+          <span data-i18n="spirit-label-1">Spirit of Light em cada cidade</span>
+        </div>
+        <div class="spirit-chip">
+          <div class="spirit-icon"></div>
+          <span data-i18n="spirit-label-2">Guardião da chama recompensado</span>
+        </div>
+        <div class="spirit-chip">
+          <div class="spirit-icon"></div>
+          <span data-i18n="spirit-label-3">Evento concluído com sucesso</span>
+        </div>
+      </div>
 
-  <div class="spirit-row">
-    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
-    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
-    <img src="https://www.tibiawiki.com.br/images/1/18/Spirit_of_Light.gif">
+      <div class="hero-body">
+        <!-- Left: global bonus -->
+        <div>
+          <div class="badge-tag">
+            <span class="badge-tag-dot"></span>
+            <span data-i18n="bonus-badge">Bônus globais até 30 de novembro</span>
+          </div>
+
+          <p data-i18n="bonus-intro">
+            Durante o período de vitória, todo o servidor recebe:
+          </p>
+
+          <ul>
+            <li><span data-i18n="bonus-1">+10% de experiência obtida.</span></li>
+            <li><span data-i18n="bonus-2">+3% de life leech.</span></li>
+            <li><span data-i18n="bonus-3">+3% de mana leech.</span></li>
+            <li><span data-i18n="bonus-4">Experiência compartilhada ainda mais forte para hunts em equipe.</span></li>
+          </ul>
+        </div>
+
+        <!-- Right: CTA -->
+        <div>
+          <div class="pill pill-secondary" style="margin-bottom:10px;">
+            <span class="pill-dot"></span>
+            <span data-i18n="cta-pill">Aproveite enquanto dura</span>
+          </div>
+
+          <div class="cta-box">
+            <div class="cta-title" data-i18n="cta-title">
+              Esse tipo de bônus não aparece sempre.
+            </div>
+            <p data-i18n="cta-body">
+              Organize suas hunts, chame o time da guild, limpe seus task logs e use esses dias para adiantar
+              tudo o que você vinha adiando.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REWARDS CARD -->
+    <section class="card">
+      <div class="card-header">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span data-i18n="rewards-pill">Recompensas do Lightbearer</span>
+        </div>
+      </div>
+
+      <h2 class="hero-title" style="font-size:20px;margin-top:2px;margin-bottom:12px;" data-i18n="rewards-title">
+        O que você recebe pelos basins acesos
+      </h2>
+
+      <div class="rewards-grid">
+        <!-- 1–9 basins -->
+        <div class="rewards-column">
+          <div class="reward-badge">
+            <span class="reward-dot"></span>
+            <span data-i18n="rewards-left-pill">Para quem acendeu de 1 a 9 basins</span>
+          </div>
+          <p class="hint" data-i18n="rewards-left-hint">
+            Se pelo menos um basin foi aceso pelo seu personagem, você recebe:
+          </p>
+          <ul class="reward-list">
+            <li>20x <strong>Midnight Shards</strong></li>
+            <li>1x <strong>Silver Fafnar Trophy</strong></li>
+            <li>
+              1x <strong>Brocade Backpack</strong> contendo:
+              <ul class="sub">
+                <li>1x Death Ring</li>
+                <li>1x Ring of Healing</li>
+                <li>50x Christmas Tokens</li>
+                <li>2x Gold Ingots</li>
+                <li>1x Giant Shimmering Pearl</li>
+                <li>30x Small Topazes</li>
+                <li>1x Time Ring</li>
+                <li>1x Stealth Ring</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 10 basins -->
+        <div class="rewards-column">
+          <div class="reward-badge">
+            <span class="reward-dot"></span>
+            <span data-i18n="rewards-right-pill">Para quem acendeu todos os 10 basins</span>
+          </div>
+          <p class="hint" data-i18n="rewards-right-hint">
+            Além de tudo o que foi listado ao lado, você ainda recebe:
+          </p>
+          <ul class="reward-list">
+            <li>1x <strong>Moon Backpack</strong> (somente na primeira participação)</li>
+            <li>1x <strong>Deed of Ownership</strong></li>
+            <li>
+              1x <strong>Brocade Backpack</strong> contendo:
+              <ul class="sub">
+                <li>10x Midnight Shards</li>
+                <li>1x Golden Fafnar Trophy</li>
+                <li>1x Celestial Torch <span style="color:#eab308;">(chance rara)</span></li>
+              </ul>
+            </li>
+            <li>
+              1x <strong>Crown Backpack</strong> contendo:
+              <ul class="sub">
+                <li>2x Ring of Healings</li>
+                <li>1x Might Ring</li>
+                <li>4x Gold Ingots</li>
+                <li>50x Demonic Essences</li>
+                <li>1x Violet Gem</li>
+                <li>40x Small Diamonds</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- NPC / HOW TO CLAIM -->
+    <section class="card">
+      <div class="card-header">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span data-i18n="npc-pill">Como receber suas recompensas</span>
+        </div>
+      </div>
+
+      <div class="npc-section">
+        <div class="npc-avatar" aria-hidden="true">
+          <div class="npc-avatar-inner">L</div>
+        </div>
+        <div class="npc-text">
+          <h3 data-i18n="npc-title">Fale com Lucius em Yalahar</h3>
+          <p data-i18n="npc-body">
+            Vá até o templo de Yalahar e fale com o NPC <strong>Lucius</strong>. Basta iniciar a conversa e seguir as
+            palavras-chave para ser enviado à área de recompensas.
+          </p>
+          <ul class="npc-steps">
+            <li data-i18n="npc-step-1">
+              Comece dizendo
+              <span class="npc-keyword">hi</span>
+              e mencione
+              <span class="npc-keyword">lightbearer</span>.
+            </li>
+            <li data-i18n="npc-step-2">
+              Ele irá teleportar você para o lado bom do Temple of Light e, em seguida, para o templo da sua cidade.
+            </li>
+            <li data-i18n="npc-step-3">
+              De lá, siga para <strong>Kazordoon</strong> para acessar a sala de recompensas e a estátua de Fafnar.
+            </li>
+            <li data-i18n="npc-step-4">
+              Entregue seus Midnight Shards e colete todos os itens listados acima.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <strong data-i18n="footer-main">
+        Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
+      </strong>
+      <small>Blackout Guild | Todos os direitos reservados.</small>
+    </footer>
   </div>
 
-  <p style="font-size:19px; line-height:1.6;">
-    <strong style="color:#ffe177;">Your world managed to keep all ten lightbearer basins burning!</strong><br>
-    Aproveitem a experiência compartilhada aumentada e os bônus enquanto durar o evento.
-  </p>
+  <script>
+    const i18n = {
+      pt: {
+        "brand-sub": "Vitória do servidor",
+        "hero-pill": "Vitória do servidor",
+        "hero-title": "Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.",
+        "hero-subtitle-1": "Your world managed to keep all ten lightbearer basins burning!",
+        "hero-subtitle-2": " Aproveitem a experiência compartilhada aumentada e os bônus globais enquanto durar o evento.",
+        "spirit-label-1": "Spirit of Light em cada cidade",
+        "spirit-label-2": "Guardião da chama recompensado",
+        "spirit-label-3": "Evento concluído com sucesso",
+        "bonus-badge": "Bônus globais até 30 de novembro",
+        "bonus-intro": "Durante o período de vitória, todo o servidor recebe:",
+        "bonus-1": "+10% de experiência obtida.",
+        "bonus-2": "+3% de life leech.",
+        "bonus-3": "+3% de mana leech.",
+        "bonus-4": "Experiência compartilhada ainda mais forte para hunts em equipe.",
+        "cta-pill": "Aproveite enquanto dura",
+        "cta-title": "Esse tipo de bônus não aparece sempre.",
+        "cta-body": "Organize suas hunts, chame o time da guild, limpe seus task logs e use esses dias para adiantar tudo o que você vinha adiando.",
+        "rewards-pill": "Recompensas do Lightbearer",
+        "rewards-title": "O que você recebe pelos basins acesos",
+        "rewards-left-pill": "Para quem acendeu de 1 a 9 basins",
+        "rewards-left-hint": "Se pelo menos um basin foi aceso pelo seu personagem, você recebe:",
+        "rewards-right-pill": "Para quem acendeu todos os 10 basins",
+        "rewards-right-hint": "Além de tudo o que foi listado ao lado, você ainda recebe:",
+        "npc-pill": "Como receber suas recompensas",
+        "npc-title": "Fale com Lucius em Yalahar",
+        "npc-body": "Vá até o templo de Yalahar e fale com o NPC Lucius. Basta iniciar a conversa e seguir as palavras-chave para ser enviado à área de recompensas.",
+        "npc-step-1": "Comece dizendo hi e mencione lightbearer.",
+        "npc-step-2": "Ele irá teleportar você para o lado bom do Temple of Light e, em seguida, para o templo da sua cidade.",
+        "npc-step-3": "De lá, siga para Kazordoon para acessar a sala de recompensas e a estátua de Fafnar.",
+        "npc-step-4": "Entregue seus Midnight Shards e colete todos os itens listados acima.",
+        "footer-main": "Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz."
+      },
+      en: {
+        "brand-sub": "Server victory",
+        "hero-pill": "Server victory",
+        "hero-title": "Luminera kept the Lightbearer flame alive. Congratulations to all guardians of the light.",
+        "hero-subtitle-1": "Your world managed to keep all ten lightbearer basins burning!",
+        "hero-subtitle-2": " Enjoy the increased shared experience and global bonuses while the event lasts.",
+        "spirit-label-1": "Spirit of Light in every city",
+        "spirit-label-2": "Flame guardians rewarded",
+        "spirit-label-3": "Event successfully completed",
+        "bonus-badge": "Global bonuses until November 30th",
+        "bonus-intro": "During the victory period, the entire server receives:",
+        "bonus-1": "+10% experience gained.",
+        "bonus-2": "+3% life leech.",
+        "bonus-3": "+3% mana leech.",
+        "bonus-4": "Even stronger shared experience for party hunts.",
+        "cta-pill": "Make it count",
+        "cta-title": "This kind of bonus doesn’t show up often.",
+        "cta-body": "Set up your hunts, call your guild, clear your task logs and use these days to push everything you’ve been postponing.",
+        "rewards-pill": "Lightbearer rewards",
+        "rewards-title": "What you receive for the basins you lit",
+        "rewards-left-pill": "If you lit 1 to 9 basins",
+        "rewards-left-hint": "If at least one basin was lit by your character, you receive:",
+        "rewards-right-pill": "If you lit all 10 basins",
+        "rewards-right-hint": "On top of everything on the left, you also receive:",
+        "npc-pill": "How to claim your rewards",
+        "npc-title": "Talk to Lucius in Yalahar",
+        "npc-body": "Go to the temple in Yalahar and speak with the NPC Lucius. Start the conversation and follow the keywords to be sent to the reward area.",
+        "npc-step-1": "Start by saying hi and mentioning lightbearer.",
+        "npc-step-2": "He will teleport you to the good side of the Temple of Light and then back to your hometown temple.",
+        "npc-step-3": "From there, travel to Kazordoon to reach the reward room and Fafnar’s statue.",
+        "npc-step-4": "Turn in your Midnight Shards and collect all items listed above.",
+        "footer-main": "Luminera kept the Lightbearer flame alive. Congratulations to all guardians of the light."
+      },
+      es: {
+        "brand-sub": "Victoria del servidor",
+        "hero-pill": "Victoria del servidor",
+        "hero-title": "Luminera mantuvo encendida la llama del Lightbearer. Felicidades a todos los guardianes de la luz.",
+        "hero-subtitle-1": "¡Tu mundo logró mantener encendidos los diez basins del Lightbearer!",
+        "hero-subtitle-2": " Disfruten de la experiencia compartida aumentada y de los bonus globales mientras dure el evento.",
+        "spirit-label-1": "Spirit of Light en cada ciudad",
+        "spirit-label-2": "Guardianes de la llama recompensados",
+        "spirit-label-3": "Evento completado con éxito",
+        "bonus-badge": "Bonos globales hasta el 30 de noviembre",
+        "bonus-intro": "Durante el período de victoria, todo el servidor recibe:",
+        "bonus-1": "+10% de experiencia obtenida.",
+        "bonus-2": "+3% de life leech.",
+        "bonus-3": "+3% de mana leech.",
+        "bonus-4": "Experiencia compartida aún más fuerte para hunts en equipo.",
+        "cta-pill": "Aprovéchalo",
+        "cta-title": "Este tipo de bonus no aparece siempre.",
+        "cta-body": "Organiza tus hunts, llama a tu guild, limpia tus task logs y usa estos días para adelantar todo lo que venías posponiendo.",
+        "rewards-pill": "Recompensas del Lightbearer",
+        "rewards-title": "Lo que recibes por los basins encendidos",
+        "rewards-left-pill": "Si encendiste de 1 a 9 basins",
+        "rewards-left-hint": "Si al menos un basin fue encendido por tu personaje, recibes:",
+        "rewards-right-pill": "Si encendiste los 10 basins",
+        "rewards-right-hint": "Además de todo lo de la izquierda, también recibes:",
+        "npc-pill": "Cómo reclamar tus recompensas",
+        "npc-title": "Habla con Lucius en Yalahar",
+        "npc-body": "Ve al templo de Yalahar y habla con el NPC Lucius. Solo inicia la conversación y sigue las palabras clave para ser enviado al área de recompensas.",
+        "npc-step-1": "Empieza diciendo hi y mencionando lightbearer.",
+        "npc-step-2": "Te teleportará al lado bueno del Temple of Light y luego al templo de tu ciudad.",
+        "npc-step-3": "Desde allí, ve a Kazordoon para entrar a la sala de recompensas y a la estatua de Fafnar.",
+        "npc-step-4": "Entrega tus Midnight Shards y recoge todos los ítems listados arriba.",
+        "footer-main": "Luminera mantuvo encendida la llama del Lightbearer. Felicidades a todos los guardianes de la luz."
+      }
+    };
 
-  <br>
+    function applyLang(lang) {
+      const dict = i18n[lang] || i18n.pt;
+      document.documentElement.lang = lang === "pt" ? "pt-br" : (lang === "es" ? "es" : "en");
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+    }
 
-  <span class="badge" style="background:#292910; border-color:#5a5a23; color:#fff2a9;">
-    Bônus globais até 30 de novembro
-  </span>
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b === btn));
+        applyLang(lang);
+      });
+    });
 
-  <ul style="font-size:17px; line-height:1.7; margin-bottom:10px;">
-    <li><strong>+10%</strong> de experiência obtida</li>
-    <li><strong>+3%</strong> de life leech</li>
-    <li><strong>+3%</strong> de mana leech</li>
-    <li>Experiência compartilhada ainda mais forte para hunts em equipe</li>
-  </ul>
-
-  <br><br>
-
-  <h2 class="section-title">Como pegar suas recompensas</h2>
-
-  <div class="npc-box">
-    <img src="https://www.tibiawiki.com.br/images/d/d1/Lucius.gif" alt="Lucius">
-    <p style="margin:0; font-size:16px; line-height:1.5;">
-      Vá até <strong>Lucius</strong> em <strong>Yalahar</strong> e apenas <strong>diga “hi” e depois “reward”</strong>.
-      Ele irá teleportar você diretamente para o templo. Depois disso, siga para <strong>Kazordoon</strong> para acessar
-      a <strong>Sala de Recompensas</strong> e visitar a <strong>estátua de Fafnar</strong>.
-    </p>
-  </div>
-
-</div>
-
-
-
-<!-- ====================================== -->
-<!--      LISTA COMPLETA DE RECOMPENSAS     -->
-<!-- ====================================== -->
-
-<div class="card">
-  <span class="badge">Recompensas do Lightbearer</span>
-
-  <h2 class="section-title">O que você recebe pelos basins acesos</h2>
-
-  <div style="display:flex; gap:40px; flex-wrap:wrap;">
-
-    <!-- 1–9 BASINS -->
-    <div class="reward-list" style="flex:1; min-width:300px;">
-      <h3 style="color:#fff;">Para quem acendeu de 1 a 9 basins</h3>
-
-      <p style="color:#ccc; margin-top:4px;">Se pelo menos um basin foi aceso pelo seu personagem, você recebe:</p>
-
-      <ul>
-        <li>20× Midnight Shards <img src="https://www.tibiawiki.com.br/images/c/c5/Midnight_Shard.gif"></li>
-        <li>1× Silver Fafnar Trophy <img src="https://www.tibiawiki.com.br/images/5/55/Silver_Fafnar_Trophy.gif"></li>
-
-        <li>1× Brocade Backpack <img src="https://www.tibiawiki.com.br/images/9/95/Brocade_Backpack.gif"> contendo:
-          <ul>
-            <li>1× Death Ring <img src="https://www.tibiawiki.com.br/images/6/6c/Death_Ring.gif"></li>
-            <li>1× Ring of Healing <img src="https://www.tibiawiki.com.br/images/d/d4/Ring_of_Healing.gif"></li>
-            <li>50× Christmas Tokens <img src="https://www.tibiawiki.com.br/images/6/6f/Christmas_Token.gif"></li>
-            <li>2× Gold Ingots <img src="https://www.tibiawiki.com.br/images/f/f8/Gold_Ingot.gif"></li>
-            <li>1× Giant Shimmering Pearl <img src="https://www.tibiawiki.com.br/images/3/3c/Giant_Shimmering_Pearl.gif"></li>
-            <li>30× Small Topazes <img src="https://www.tibiawiki.com.br/images/8/83/Small_Topaz.gif"></li>
-            <li>1× Time Ring <img src="https://www.tibiawiki.com.br/images/3/38/Time_Ring.gif"></li>
-            <li>1× Stealth Ring <img src="https://www.tibiawiki.com.br/images/7/79/Stealth_Ring.gif"></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 10 BASINS -->
-    <div class="reward-list" style="flex:1; min-width:300px;">
-      <h3 style="color:#fff;">Para quem acendeu todos os 10 basins</h3>
-
-      <p style="color:#ccc; margin-top:4px;">Além de tudo o que foi listado ao lado, você ainda recebe:</p>
-
-      <ul>
-        <li>1× Moon Backpack <img src="https://www.tibiawiki.com.br/images/9/97/Moon_Backpack.gif"></li>
-        <li>1× Deed of Ownership <img src="https://www.tibiawiki.com.br/images/d/d7/Deed_of_Ownership.gif"></li>
-
-        <li>1× Brocade Backpack <img src="https://www.tibiawiki.com.br/images/9/95/Brocade_Backpack.gif"> contendo:
-          <ul>
-            <li>10× Midnight Shards <img src="https://www.tibiawiki.com.br/images/c/c5/Midnight_Shard.gif"></li>
-            <li>1× Golden Fafnar Trophy <img src="https://www.tibiawiki.com.br/images/0/0e/Golden_Fafnar_Trophy.gif"></li>
-            <li>1× Celestial Torch <img src="https://www.tibiawiki.com.br/images/0/08/Celestial_Torch.gif"></li>
-          </ul>
-        </li>
-
-        <li>1× Crown Backpack <img src="https://www.tibiawiki.com.br/images/a/a5/Crown_Backpack.gif"> contendo:
-          <ul>
-            <li>2× Ring of Healings <img src="https://www.tibiawiki.com.br/images/d/d4/Ring_of_Healing.gif"></li>
-            <li>1× Might Ring <img src="https://www.tibiawiki.com.br/images/6/63/Might_Ring.gif"></li>
-            <li>4× Gold Ingots <img src="https://www.tibiawiki.com.br/images/f/f8/Gold_Ingot.gif"></li>
-            <li>50× Demonic Essences <img src="https://www.tibiawiki.com.br/images/0/00/Demonic_Essence.gif"></li>
-            <li>1× Violet Gem <img src="https://www.tibiawiki.com.br/images/5/55/Violet_Gem.gif"></li>
-            <li>40× Small Diamonds <img src="https://www.tibiawiki.com.br/images/b/b7/Small_Diamond.gif"></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-
-  <br>
-
-  <p style="text-align:center; margin-top:30px; font-size:16px; color:#8a8a8a;">
-    Luminera manteve acesa a chama do Lightbearer. Parabéns a todos os guardiões da luz.
-  </p>
-</div>
-
-
-<!-- ====================================== -->
-<!--               RODAPÉ                   -->
-<!-- ====================================== -->
-
-<div class="footer">
-  Blackout Guild | Todos os direitos reservados.
-</div>
-
-</div>
-
+    // inicial
+    applyLang("pt");
+  </script>
 </body>
 </html>
